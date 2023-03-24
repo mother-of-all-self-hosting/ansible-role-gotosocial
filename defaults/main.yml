@@ -24,8 +24,6 @@ gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith('
 
 gotosocial_container_network: '{{ gotosocial_identifier }}'
 
-gotosocial_bind_port: 8080
-
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
 # Use this to expose this container to a reverse proxy, which runs in a different container network.
