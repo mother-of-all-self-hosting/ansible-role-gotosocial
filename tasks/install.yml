@@ -35,7 +35,6 @@
     owner: "{{ gotosocial_uid }}"
     group: "{{ gotosocial_gid }}"
     mode: 0640
-  when: "gotosocial_playbook_traefik_role_enabled"
 
 - name: Ensure gotosocial configuration is deployed
   ansible.builtin.template:
