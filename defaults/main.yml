@@ -8,8 +8,6 @@ gotosocial_hostname: ''
 gotosocial_uid: 3995
 gotosocial_gid: 3995
 
-gotosocial_playbook_traefik_role_enabled: true
-
 gotosocial_base_path: "/{{ gotosocial_identifier }}"
 gotosocial_config_path: "{{ gotosocial_base_path }}/config"
 gotosocial_data_path: "{{ gotosocial_base_path }}/data"
