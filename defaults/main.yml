@@ -44,7 +44,14 @@ gotosocial_container_additional_networks: []
 gotosocial_container_labels_traefik_enabled: false
 gotosocial_container_labels_traefik_docker_network: ""
 gotosocial_container_labels_traefik_entrypoints: web-secure
+gotosocial_container_labels_traefik_tls: "{{ gotosocial_container_labels_traefik_entrypoints != 'web' }}"
 gotosocial_container_labels_traefik_tls_certResolver: default  # noqa var-naming
+
+# Controls which additional headers to attach to all HTTP requests.
+# To add your own custom request headers, use `gotosocial_container_labels_traefik_additional_response_headers_custom`
+gotosocial_container_labels_traefik_additional_request_headers: "{{ gotosocial_container_labels_traefik_additional_request_headers_auto | combine(gotosocial_container_labels_traefik_additional_request_headers_custom) }}"
+gotosocial_container_labels_traefik_additional_request_headers_auto: {}
+gotosocial_container_labels_traefik_additional_request_headers_custom: {}
 
 # gotosocial_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
 # See `roles/custom/collabora_online/templates/labels.j2` for details.
