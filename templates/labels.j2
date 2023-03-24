@@ -4,10 +4,10 @@ traefik.docker.network={{ gotosocial_container_labels_traefik_docker_network }}
 {% endif %}
 traefik.enable=true
 {% endif %}
-traefik.http.routers.gotosocial.rule=Host("{{ gotosocial_hostname }}")
-traefik.http.routers.gotosocial.service=gotosocial
-traefik.http.routers.gotosocial.entrypoints={{ gotosocial_container_labels_traefik_entrypoints }}
-traefik.http.routers.gotosocial.tls.certResolver={{ gotosocial_container_labels_traefik_tls_certResolver }}
-traefik.http.services.gotosocial.loadbalancer.server.port={{ gotosocial_bind_port }}
+traefik.http.routers.{{ gotosocial_identifier }}.rule=Host("{{ gotosocial_hostname }}")
+traefik.http.routers.{{ gotosocial_identifier }}.service={{ gotosocial_identifier }}
+traefik.http.routers.{{ gotosocial_identifier }}.entrypoints={{ gotosocial_container_labels_traefik_entrypoints }}
+traefik.http.routers.{{ gotosocial_identifier }}.tls.certResolver={{ gotosocial_container_labels_traefik_tls_certResolver }}
+traefik.http.services.{{ gotosocial_identifier }}.loadbalancer.server.port={{ gotosocial_bind_port }}
 
 {{ gotosocial_container_labels_additional_labels }}
