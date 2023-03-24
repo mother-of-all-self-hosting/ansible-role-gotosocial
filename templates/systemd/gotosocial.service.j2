@@ -15,14 +15,14 @@ ExecStartPre=/usr/bin/env docker create \
                 --rm \
                 --name={{ gotosocial_identifier }} \
                 --log-driver=none \
-			    --user={{ gotosocial_uid }}:{{ gotosocial_gid }} \
+                --user={{ gotosocial_uid }}:{{ gotosocial_gid }} \
                 --cap-drop=ALL \
-				--label-file={{ gotosocial_config_path }}/labels \
+                --label-file={{ gotosocial_config_path }}/labels \
                 --network={{ gotosocial_container_network }} \
                 --mount type=bind,src={{ gotosocial_data_path }},dst=/gotosocial/storage \
                 --read-only \
                 --env-file={{ gotosocial_env_path }} \
-				{{ gotosocial_container_image }}
+                {{ gotosocial_container_image }}
 
 {% for network in gotosocial_container_additional_networks %}
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ gotosocial_identifier }}
