@@ -24,9 +24,12 @@ gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith('
 
 gotosocial_container_network: '{{ gotosocial_identifier }}'
 
-# Controls whether the gotosocial container exposes its HTTP port (tcp/8080 in the container).
+# The port number in the container
+gotosocial_container_http_port: 8080
+
+# Controls whether the gotosocial container exposes its HTTP port (as defined by `gotosocial_container_http_port`).
 #
-# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:37150"), or empty string to not expose.
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:8731"), or empty string to not expose.
 gotosocial_container_http_host_bind_port: ""
 
 # A list of additional container networks that the container would be connected to.
