@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: gotosocial
   author: Julian-Samuel Gebühr
   company: Hyteck
   description: Ansible role to install gotosocial, a self-hosted ActivityPub social network server.
