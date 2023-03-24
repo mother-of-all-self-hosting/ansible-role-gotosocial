@@ -1,0 +1,49 @@
+---
+
+gotosocial_enabled: true
+gotosocial_identifier: gotosocial
+
+gotosocial_hostname: ''
+
+gotosocial_uid: 3995
+gotosocial_gid: 3995
+
+gotosocial_playbook_traefik_role_enabled: true
+
+gotosocial_base_path: "/{{ gotosocial_identifier }}"
+gotosocial_config_path: "{{ gotosocial_base_path }}/config"
+gotosocial_data_path: "{{ gotosocial_base_path }}/data"
+gotosocial_env_path: "{{ gotosocial_config_path }}/env"
+
+gotosocial_systemd_required_services_list: ['docker.service']
+
+gotosocial_version: 0.7.1
+
+gotosocial_container_image: "superseriousbusiness/gotosocial:{{ gotosocial_version }}"
+
+gotosocial_container_network: '{{ gotosocial_identifier }}'
+
+gotosocial_bind_port: 8080
+
+# A list of additional container networks that the container would be connected to.
+# The role does not create these networks, so make sure they already exist.
+# Use this to expose this container to a reverse proxy, which runs in a different container network.
+gotosocial_container_additional_networks: []
+
+# gotosocial_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
+# See `roles/custom/gotosocial_gotosocial/templates/labels.j2` for details.
+#
+# To inject your own other container labels, see `gotosocial_container_labels_additional_labels`.
+gotosocial_container_labels_traefik_enabled: false
+gotosocial_container_labels_traefik_docker_network: ""
+gotosocial_container_labels_traefik_entrypoints: web-secure
+gotosocial_container_labels_traefik_tls_certResolver: default  # noqa var-naming
+
+# gotosocial_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
+# See `roles/custom/collabora_online/templates/labels.j2` for details.
+#
+# Example:
+# gotosocial_container_labels_additional_labels: |
+#   my.label=1
+#   another.label="here"
+gotosocial_container_labels_additional_labels: ''

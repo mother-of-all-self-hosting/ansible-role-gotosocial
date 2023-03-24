@@ -1,0 +1,5 @@
+---
+
+- name: Promote user to admin
+  ansible.builtin.command:
+    cmd: "{{ devture_systemd_docker_base_host_command_docker }} exec {{ gotosocial_identifier }}  /gotosocial/gotosocial admin account promote --username {{ username | quote }}"

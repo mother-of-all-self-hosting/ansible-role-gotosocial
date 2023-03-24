@@ -1,0 +1,39 @@
+---
+
+- block:
+    - when: gotosocial_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/validate_config.yml"
+  tags:
+    - setup-all
+    - setup-gotosocial
+    - install-all
+    - install-gotosocial
+
+- block:
+    - when: gotosocial_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/install.yml"
+  tags:
+    - setup-all
+    - setup-gotosocial
+    - install-all
+    - install-gotosocial
+
+- block:
+    - when: not gotosocial_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/uninstall.yml"
+  tags:
+    - setup-all
+    - setup-gotosocial
+
+- block:
+    - when: gotosocial_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/add-user.yml"
+  tags:
+    - gotosocial-add-user
+    - gotosocial-add-admin
+
+- block:
+    - when: gotosocial_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/promote-admin.yml"
+  tags:
+    - gotosocial-add-admin
