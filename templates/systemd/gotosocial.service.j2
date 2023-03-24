@@ -17,6 +17,9 @@ ExecStartPre=/usr/bin/env docker create \
                 --log-driver=none \
                 --user={{ gotosocial_uid }}:{{ gotosocial_gid }} \
                 --cap-drop=ALL \
+                {% if gotosocial_container_http_host_bind_port %}
+                -p {{ gotosocial_container_http_host_bind_port }}:8080 \
+                {% endif %}
                 --label-file={{ gotosocial_config_path }}/labels \
                 --network={{ gotosocial_container_network }} \
                 --mount type=bind,src={{ gotosocial_data_path }},dst=/gotosocial/storage \

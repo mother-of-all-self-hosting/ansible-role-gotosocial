@@ -24,6 +24,11 @@ gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith('
 
 gotosocial_container_network: '{{ gotosocial_identifier }}'
 
+# Controls whether the gotosocial container exposes its HTTP port (tcp/8080 in the container).
+#
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:37150"), or empty string to not expose.
+gotosocial_container_http_host_bind_port: ""
+
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
 # Use this to expose this container to a reverse proxy, which runs in a different container network.
