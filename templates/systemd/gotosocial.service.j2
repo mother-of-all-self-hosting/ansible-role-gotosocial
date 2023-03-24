@@ -11,7 +11,7 @@ Type=simple
 ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ gotosocial_identifier }} 2>/dev/null || true'
 ExecStartPre=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ gotosocial_identifier }} 2>/dev/null || true'
 
-ExecStartPre=/usr/bin/env docker create \
+ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} create \
                 --rm \
                 --name={{ gotosocial_identifier }} \
                 --log-driver=none \
@@ -31,7 +31,7 @@ ExecStartPre=/usr/bin/env docker create \
 ExecStartPre={{ devture_systemd_docker_base_host_command_docker }} network connect {{ network }} {{ gotosocial_identifier }}
 {% endfor %}
 
-ExecStart=/usr/bin/env docker start --attach {{ gotosocial_identifier }}
+ExecStart={{ devture_systemd_docker_base_host_command_docker }} start --attach {{ gotosocial_identifier }}
 
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} kill {{ gotosocial_identifier }} 2>/dev/null || true'
 ExecStop=-{{ devture_systemd_docker_base_host_command_sh }} -c '{{ devture_systemd_docker_base_host_command_docker }} rm {{ gotosocial_identifier }} 2>/dev/null || true'
