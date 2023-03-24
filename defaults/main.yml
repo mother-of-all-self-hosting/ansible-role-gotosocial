@@ -5,8 +5,8 @@ gotosocial_identifier: gotosocial
 
 gotosocial_hostname: ''
 
-gotosocial_uid: 3995
-gotosocial_gid: 3995
+gotosocial_uid: ''
+gotosocial_gid: ''
 
 gotosocial_base_path: "/{{ gotosocial_identifier }}"
 gotosocial_config_path: "{{ gotosocial_base_path }}/config"
