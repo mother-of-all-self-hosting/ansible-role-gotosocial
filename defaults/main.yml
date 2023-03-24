@@ -19,7 +19,10 @@ gotosocial_systemd_required_services_list: ['docker.service']
 
 gotosocial_version: 0.7.1
 
-gotosocial_container_image: "superseriousbusiness/gotosocial:{{ gotosocial_version }}"
+gotosocial_container_image: "{{ gotosocial_container_image_registry_prefix }}superseriousbusiness/gotosocial:{{ gotosocial_container_image_tag }}"
+gotosocial_container_image_registry_prefix: docker.io/
+gotosocial_container_image_tag: "{{ gotosocial_version }}"
+gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith(':latest') }}"
 
 gotosocial_container_network: '{{ gotosocial_identifier }}'
 
