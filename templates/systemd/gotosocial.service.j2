@@ -1,5 +1,5 @@
 [Unit]
-Description=GotoSocial ActivityPub Server
+Description=GotoSocial ActivityPub Server ({{ gotosocial_identifier }})
 {% for service in gotosocial_systemd_required_services_list %}
 Requires={{ service }}
 After={{ service }}
