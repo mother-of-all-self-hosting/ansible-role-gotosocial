@@ -48,6 +48,15 @@ gotosocial_container_http_host_bind_port: ""
 # Use this to expose this container to a reverse proxy, which runs in a different container network.
 gotosocial_container_additional_networks: []
 
+gotosocial_database_hostname: ''
+gotosocial_database_port: 5432
+gotosocial_database_name: gotosocial
+gotosocial_database_username: gotosocial
+gotosocial_database_password: ''
+# Use this to set the sslmode parameter of the SSL connection
+# By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
+gotosocial_database_sslmode: disable
+
 # gotosocial_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
 # See `roles/custom/gotosocial_gotosocial/templates/labels.j2` for details.
 #
