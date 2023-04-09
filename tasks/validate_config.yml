@@ -7,3 +7,13 @@
   when: "vars[item] == ''"
   with_items:
     - gotosocial_hostname
+
+- name: Fail when SMTP settings are missing (and SMTP is enabled by setting host)
+  ansible.builtin.fail:
+    msg: >-
+      You need to define a required configuration setting (`{{ item }}`) to correctly set up email via SMTP.
+  when: "gotosocial_smtp_host !='' and vars[item] == ''"
+  with_items:
+    - gotosocial_smtp_username
+    - gotosocial_smtp_password
+    - gotosocial_smtp_from

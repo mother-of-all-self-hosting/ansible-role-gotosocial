@@ -57,6 +57,17 @@ gotosocial_database_password: ''
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
 gotosocial_database_sslmode: disable
 
+
+# Configure the E-Mail address that GTS will use to inform you about reports, enable password resets and other activities
+# Not required but useful
+# Check out https://docs.gotosocial.org/en/latest/configuration/smtp/ for a configuration reference
+gotosocial_smtp_host: ''
+gotosocial_smtp_port: 587
+gotosocial_smtp_username: ''
+gotosocial_smtp_password: ''
+gotosocial_smtp_from: ''
+gotosocial_smtp_disclose_recipients: false
+
 # gotosocial_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
 # See `roles/custom/gotosocial_gotosocial/templates/labels.j2` for details.
 #
