@@ -68,6 +68,15 @@ gotosocial_smtp_password: ''
 gotosocial_smtp_from: ''
 gotosocial_smtp_disclose_recipients: false
 
+# Minimum amount of characters required as an image or video description.
+# Values >0 force a user to provide a media description
+gotosocial_media_description_min_chars: 0
+# Maximum amount of characters permitted in an image or video description.
+gotosocial_media_description_max_chars: 1500
+
+# Include the client IP in the log GTS log
+gotosocial_log_client_IP: true
+
 # Additional environment variables to pass to the GoToSocial container.
 # You can use this to further influence the default configuration.
 #
