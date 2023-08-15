@@ -26,7 +26,7 @@ gotosocial_env_path: "{{ gotosocial_config_path }}/env"
 
 gotosocial_systemd_required_services_list: ['docker.service']
 
-gotosocial_version: 0.10.0
+gotosocial_version: 0.11.0
 
 gotosocial_container_image: "{{ gotosocial_container_image_registry_prefix }}superseriousbusiness/gotosocial:{{ gotosocial_container_image_tag }}"
 gotosocial_container_image_registry_prefix: docker.io/
