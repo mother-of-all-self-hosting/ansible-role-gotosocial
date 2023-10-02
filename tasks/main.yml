@@ -27,13 +27,14 @@
 
 - block:
     - when: gotosocial_enabled | bool
-      ansible.builtin.include_tasks: "{{ role_path }}/tasks/add-user.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/add_users_auto.yml"
   tags:
-    - gotosocial-add-user
-    - gotosocial-add-admin
+    - ensure-gotosocial-users-created
+    - ensure-users-created
 
 - block:
     - when: gotosocial_enabled | bool
-      ansible.builtin.include_tasks: "{{ role_path }}/tasks/promote-admin.yml"
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/add_user_manual.yml"
   tags:
+    - gotosocial-add-user
     - gotosocial-add-admin

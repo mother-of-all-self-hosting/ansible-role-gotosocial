@@ -15,6 +15,24 @@
     msg: "The `password` variable needs to be provided to this playbook, via --extra-vars"
   when: "password is not defined or password == '<password>'"
 
+- ansible.builtin.set_fact:
+    initial_role: user
+  tags:
+  - gotosocial-add-user
+
+- ansible.builtin.set_fact:
+    initial_role: admin
+  tags:
+  - gotosocial-add-admin
+
+- ansible.builtin.set_fact:
+    user:
+      username: "{{ username }}"
+      initial_email: "{{ email }}"
+      initial_password: "{{ password }}"
+      initial_type: "{{ initial_role }}"
+
+
 - name: Ensure GoToSocial is started
   ansible.builtin.service:
     name: "{{ gotosocial_identifier }}"
@@ -27,10 +45,6 @@
     seconds: 7
   when: "start_result.changed"
 
-- name: Create user account
-  ansible.builtin.command:
-    cmd: "{{ devture_systemd_docker_base_host_command_docker }} exec {{ gotosocial_identifier }}  /gotosocial/gotosocial admin account create --username {{ username | quote }} --email {{ email | quote }} --password {{ password | quote }}"
-  register: gotosocial_create_account_result
-  failed_when:
-    - gotosocial_create_account_result.rc > 0
-    - '"is already in use" not in gotosocial_create_account_result.stderr'
+- name: Ensure GoToSocial user is created
+  ansible.builtin.include_tasks: "{{ role_path }}/tasks/util/ensure_user_registered.yml"
+  no_log: true

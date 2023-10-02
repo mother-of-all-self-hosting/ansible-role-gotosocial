@@ -16,6 +16,28 @@ gotosocial_hostname: ''
 # https://docs.gotosocial.org/en/latest/installation_guide/advanced/#can-i-host-my-instance-at-fediexampleorg-but-have-just-exampleorg-in-my-username
 gotosocial_account_domain: "{{ gotosocial_hostname }}"
 
+# This var holds the list of users that should be created automatically by playbooks/roles/group vars,
+# To add your own users for specific host, use `gotosocial_users_additional`
+# Example:
+# gotosocial_users_auto:
+# - username: admin
+#   initial_email: admin@example.com
+#   initial_password: password
+#   initial_type: admin
+# - username: user
+#   initial_email: admin@example.com
+#   initial_password: password
+#   initial_type: user
+gotosocial_users_auto: []
+# This var holds the list of users that should be created automatically by specific host (using host's vars.yml) instead of playbook/role/group vars
+# Example:
+# gotosocial_users_additional:
+# - username: rssbot
+#   initial_email: bots@example.com
+#   initial_password: password
+#   initial_type: user
+gotosocial_users_additional: []
+
 gotosocial_uid: ''
 gotosocial_gid: ''
 
