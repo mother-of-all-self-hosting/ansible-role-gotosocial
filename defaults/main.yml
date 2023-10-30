@@ -90,6 +90,10 @@ gotosocial_smtp_password: ''
 gotosocial_smtp_from: ''
 gotosocial_smtp_disclose_recipients: false
 
+# Will set GTS_TRUSTED_PROXIES
+# By default this is set to all private IPs (https://datatracker.ietf.org/doc/html/rfc1918#section-3)
+gotosocial_trusted_proxies: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+
 # Minimum amount of characters required as an image or video description.
 # Values >0 force a user to provide a media description
 gotosocial_media_description_min_chars: 0
