@@ -38,6 +38,33 @@ gotosocial_users_auto: []
 #   initial_type: user
 gotosocial_users_additional: []
 
+# List of string. BCP47 language tags to indicate preferred languages of users on this instance.
+#
+# If you provide these, you should provide these in order from most-preferred to least-preferred,
+# but note that leaving out a language from this array doesn't mean it can't be used on this instance,
+# it only means it won't be advertised as a preferred instance language.
+#
+# It is valid to provide no entries here; your instance will then have no particular preferred language.
+#
+# See here for commonly-used tags: https://en.wikipedia.org/wiki/IETF_language_tag#List_of_common_primary_language_subtags
+# See here for all current tags: https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+#
+# Example:
+# gotosocial_instance_languages:
+# - "en"
+# - "de"
+gotosocial_instance_languages: []
+
+# https://docs.gotosocial.org/en/latest/advanced/metrics/
+gotosocial_metrics_enabled: false
+
+# Bool. Enable HTTP Basic Authentication for Prometheus metrics endpoint.
+# You also have to set gotosocial_metrics_auth_username gotosocial_metrics_auth_password
+gotosocial_metrics_auth_enabled: false
+gotosocial_metrics_auth_username: ""
+gotosocial_metrics_auth_password: ""
+
+
 gotosocial_uid: ''
 gotosocial_gid: ''
 
