@@ -103,7 +103,9 @@ gotosocial_container_http_host_bind_port: ""
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
 # Use this to expose this container to a reverse proxy, which runs in a different container network.
-gotosocial_container_additional_networks: []
+gotosocial_container_additional_networks: "{{ gotosocial_container_additional_networks_auto + gotosocial_container_additional_networks_custom }}"
+gotosocial_container_additional_networks_auto: []
+gotosocial_container_additional_networks_custom: []
 
 gotosocial_database_hostname: ''
 gotosocial_database_port: 5432
