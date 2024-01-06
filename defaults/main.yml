@@ -73,7 +73,15 @@ gotosocial_config_path: "{{ gotosocial_base_path }}/config"
 gotosocial_data_path: "{{ gotosocial_base_path }}/data"
 gotosocial_env_path: "{{ gotosocial_config_path }}/env"
 
-gotosocial_systemd_required_services_list: ['docker.service']
+gotosocial_systemd_required_services_list: "{{ gotosocial_systemd_required_services_list_default + gotosocial_systemd_required_services_list_auto + gotosocial_systemd_required_services_list_custom }}"
+gotosocial_systemd_required_services_list_default: ['docker.service']
+gotosocial_systemd_required_services_list_auto: []
+gotosocial_systemd_required_services_list_custom: []
+
+gotosocial_systemd_wanted_services_list: "{{ gotosocial_systemd_wanted_services_list_default + gotosocial_systemd_wanted_services_list_auto + gotosocial_systemd_wanted_services_list_custom }}"
+gotosocial_systemd_wanted_services_list_default: []
+gotosocial_systemd_wanted_services_list_auto: []
+gotosocial_systemd_wanted_services_list_custom: []
 
 gotosocial_version: 0.13.0
 
