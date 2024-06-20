@@ -83,7 +83,7 @@ gotosocial_systemd_wanted_services_list_default: []
 gotosocial_systemd_wanted_services_list_auto: []
 gotosocial_systemd_wanted_services_list_custom: []
 
-gotosocial_version: 0.15.0
+gotosocial_version: 0.16.0
 
 gotosocial_container_image: "{{ gotosocial_container_image_registry_prefix }}superseriousbusiness/gotosocial:{{ gotosocial_container_image_tag }}"
 gotosocial_container_image_registry_prefix: docker.io/
@@ -116,6 +116,10 @@ gotosocial_database_password: ''
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
 gotosocial_database_sslmode: disable
 
+
+# REGISTRATION
+gotosocial_accounts_registration_open: false
+gotosocial_accounts_reason_required: true
 
 # Configure the E-Mail address that GTS will use to inform you about reports, enable password resets and other activities
 # Not required but useful
