@@ -171,11 +171,11 @@ docker exec -it gotosocial /gotosocial/gotosocial admin account demote --usernam
 
 If you want to migrate your existing GoToSocial instance to another server, you can follow the procedure described as below.
 
-**Note**: the following assumes you want to migrate from **serverA** to **serverB**, but you just cave to adjust the copy commands if you are on the same server.
+**Note**: the following assumes you will migrate from **serverA** to **serverB**. Adjust the commands for copying files, if you are migrating on the same server (from an existing GoToSocial instance to the new one to start managing it with a playbook, for example).
 
 ### Stop the existing instance
 
-First, stop the existig instance by logging in to **serverA** with SSH and running the command below.
+First, stop the existing instance by logging in to **serverA** with SSH and running the command below.
 
 ```sh
 serverA$ systemctl stop gotosocial
