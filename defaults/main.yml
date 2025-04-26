@@ -263,3 +263,6 @@ gotosocial_hsts_preload_enabled: false
 #   my.label=1
 #   another.label="here"
 gotosocial_container_labels_additional_labels: ''
+
+# A list of extra arguments to pass to the container (`docker run` command)
+gotosocial_container_extra_arguments: []
