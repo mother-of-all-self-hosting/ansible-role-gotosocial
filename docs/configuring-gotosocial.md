@@ -25,12 +25,6 @@ GoToSocial is a self-hosted [ActivityPub](https://activitypub.rocks/) social net
 
 See the project's [documentation](https://docs.gotosocial.org/) to learn what GotoSocial does and why it might be useful to you.
 
-## Prerequisites
-
-To run a GoToSocial instance it is necessary to prepare a [Redis](https://redis.io/) server for managing a metadata database.
-
-If you are looking for an Ansible role for Redis, you can check out [this role (ansible-role-redis)](https://github.com/mother-of-all-self-hosting/ansible-role-redis) maintained by the [Mother-of-All-Self-Hosting (MASH)](https://github.com/mother-of-all-self-hosting) team. Note that the team recommends to have a look at [this role (ansible-role-valkey)](https://github.com/mother-of-all-self-hosting/ansible-role-valkey) for [Valkey](https://valkey.io/) instead.
-
 ## Adjusting the playbook configuration
 
 To enable GoToSocial with this role, add the following configuration to your `vars.yml` file.
@@ -64,22 +58,6 @@ gotosocial_hostname: "example.com"
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
 
 **Note**: hosting GoToSocial under a subpath (by configuring the `gotosocial_path_prefix` variable) does not seem to be possible due to GoToSocial's technical limitations.
-
-### Set variables for connecting to a Redis server
-
-As described above, it is necessary to set up a [Redis](https://redis.io/) server for managing a metadata database of a GoToSocial instance. You can use either KeyDB or Valkey alternatively.
-
-Having configured it, you need to add and adjust the following configuration to your `vars.yml` file, so that the GoToSocial instance will connect to the server:
-
-```yaml
-gotosocial_redis_username: ''
-gotosocial_redis_password: ''
-gotosocial_redis_host: YOUR_REDIS_SERVER_HOSTNAME_HERE
-gotosocial_redis_port: 6379
-gotosocial_redis_dbnumber: ''
-```
-
-Make sure to replace `YOUR_REDIS_SERVER_HOSTNAME_HERE` with the hostname of your Redis server. If the Redis server runs on the same host as GoToSocial, set `localhost`.
 
 ### Configure a storage backend
 
