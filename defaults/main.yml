@@ -232,7 +232,6 @@ gotosocial_database_password: ''
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
 gotosocial_database_sslmode: disable
 
-
 # REGISTRATION
 gotosocial_accounts_registration_open: false
 gotosocial_accounts_reason_required: true
