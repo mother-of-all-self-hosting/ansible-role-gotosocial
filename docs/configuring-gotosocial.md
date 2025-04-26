@@ -83,56 +83,39 @@ gotosocial_account_domain: "example.com"
 
 **Note**: if you enable it, please have a look at [this page on the official documentation](https://docs.gotosocial.org/en/latest/advanced/host-account-domain/) as you will have to configure the instance for it.
 
-### Configure the mailer
+### Set variables for connecting to a Postgres database server
 
-You can configure a mailer for functions such as user invitation. GoToSocial supports a SMTP server (default) and Postmark. To set it up, add the following common configuration and settings specific to SMTP server or Postmark to your `vars.yml` file as below (adapt to your needs):
+To use a Postgres server, add the following configuration to your `vars.yml` file.
 
-```yaml
-gotosocial_mailer_enabled: true
-
-# Set the email address that emails will be sent from
-gotosocial_environment_variable_mail_from_address: hello@example.com
-
-# Set the name that emails will be sent from
-gotosocial_environment_variable_mail_from_name: gotosocial
+```yml
+gotosocial_database_hostname: YOUR_POSTGRES_SERVER_HOSTNAME_HERE
+gotosocial_database_port: 5432
+gotosocial_database_name: YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
+gotosocial_database_username: YOUR_POSTGRES_SERVER_USERNAME_HERE
+gotosocial_database_password: YOUR_POSTGRES_SERVER_PASSWORD_HERE
 ```
 
-#### Use SMTP server (default)
+Make sure to replace values for variables with yours.
 
-To use a SMTP server, add the following configuration to your `vars.yml` file:
+### Configure the mailer
+
+You can configure a SMTP mailer for functions such as sending notifications. To set it up, add the following configuration to your `vars.yml` file as below (adapt to your needs):
 
 ```yaml
 # Set the hostname of the SMTP server
-gotosocial_environment_variable_smtp_host: 127.0.0.1
-
-# Set the port to use for the SMTP server
-gotosocial_environment_variable_smtp_port: 587
+gotosocial_smtp_host: 'smtp.example.com'
 
 # Set the username for the SMTP server
-gotosocial_environment_variable_smtp_username: ''
+gotosocial_smtp_username: gotosocial@example.com
 
 # Set the password for the SMTP server
-gotosocial_environment_variable_smtp_password: ''
+gotosocial_smtp_password: yourpassword
 
-# Control whether TLS is used when connecting to the server
-gotosocial_environment_variable_smtp_secure: false
-
-# Control whether SSL errors are ignored
-gotosocial_environment_variable_smtp_ignoretls: false
+# Set the email address that emails will be sent from
+gotosocial_smtp_from: gotosocial@example.com
 ```
 
 ⚠️ **Note**: without setting an authentication method such as DKIM, SPF, and DMARC for your hostname, emails are most likely to be quarantined as spam at recipient's mail servers. If you have set up a mail server with the [MASH project's exim-relay Ansible role](https://github.com/mother-of-all-self-hosting/ansible-role-exim-relay), you can enable DKIM signing with it. Refer [its documentation](https://github.com/mother-of-all-self-hosting/ansible-role-exim-relay/blob/main/docs/configuring-exim-relay.md#enable-dkim-support-optional) for details.
-
-#### Use Postmark
-
-To use Postmark, add the following configuration to your `vars.yml` file:
-
-```yaml
-gotosocial_environment_variable_mail_driver: postmark
-
-# Set the token for Postmark
-gotosocial_environment_variable_postmark_token: ''
-```
 
 ### Extending the configuration
 
@@ -140,9 +123,9 @@ There are some additional things you may wish to configure about the component.
 
 Take a look at:
 
-- [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `gotosocial_environment_variables_additional_variables` variable
+- [`defaults/main.yml`](../defaults/main.yml) for some variables that you can customize via your `vars.yml` file. You can override settings (even those that don't have dedicated playbook variables) using the `gotosocial_environment_variables_extension` variable
 
-For a complete list of GoToSocial's config options that you could put in `gotosocial_environment_variables_additional_variables`, see its [environment variables](https://gotosocial.com/docs/self-hosting/environment-variables).
+See [this page](https://docs.gotosocial.org/en/latest/configuration/#environment-variables) of the official documentation for GoToSocial's config options that you could put in `gotosocial_environment_variables_extension`.
 
 ## Installing
 
