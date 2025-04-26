@@ -58,12 +58,30 @@ gotosocial_enabled: true
 To enable the GoToSocial instance you need to set the hostname as well. To do so, add the following configuration to your `vars.yml` file. Make sure to replace `example.com` with your own value.
 
 ```yaml
-gotosocial_hostname: "example.com"
+gotosocial_hostname: "social.example.com"
 ```
+
+> [!WARNING]
+> Do not replace the value after the GoToSocial instance has already run once. If changed, it stops working properly.
 
 After adjusting the hostname, make sure to adjust your DNS records to point the domain to your server.
 
 **Note**: hosting GoToSocial under a subpath (by configuring the `gotosocial_path_prefix` variable) does not seem to be possible due to GoToSocial's technical limitations.
+
+#### Set a shorter domain for your handle (optional)
+
+On ActivityPub-powered platforms like GoToSocial, the user handle consists of two parts: username and server. For example, if your handle is `@user@social.example.com`, `user` is the username and `social.example.com` indicates the server.
+
+By default, GoToSocial uses `gotosocial_hostname` that you provide for the server's domain, but you can use a shorter one without the subdomain (`example.com`) by adding the following configuration to your `vars.yml` file:
+
+```yaml
+gotosocial_account_domain: "example.com"
+```
+
+> [!WARNING]
+> Do not replace the value after the GoToSocial instance has already run once. If changed, it stops working properly.
+
+**Note**: if you enable it, please have a look at [this page on the official documentation](https://docs.gotosocial.org/en/latest/advanced/host-account-domain/) as you will have to configure the instance for it.
 
 ### Configure a storage backend
 
