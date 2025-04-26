@@ -139,9 +139,87 @@ If you use the MASH playbook, the shortcut commands with the [`just` program](ht
 
 ## Usage
 
-After running the command for installation, GoToSocial becomes available at the specified hostname like `https://example.com`.
+After running the command for installation, you can create user account(s).
 
-To get started, go to the URL on a web browser and create a first workspace by inputting required information. For an email address, make sure to input your own email address, not the one specified to `gotosocial_environment_variable_mail_from_address`.
+Run this command to create an **administrator** user account:
+
+```sh
+ansible-playbook -i inventory/hosts setup.yml --tags=gotosocial-add-admin --extra-vars=username=YOUR_USERNAME_HERE --extra-vars=password=YOUR_PASSWORD_HERE --extra-vars=email=YOUR_EMAIL_ADDRESS_HERE
+```
+
+Run this command to create a **regular** (non-administrator) user account:
+
+```sh
+ansible-playbook -i inventory/hosts setup.yml --tags=gotosocial-add-user --extra-vars=username=YOUR_USERNAME_HERE --extra-vars=password=YOUR_PASSWORD_HERE --extra-vars=email=YOUR_EMAIL_ADDRESS_HERE
+```
+
+Now you should be able to visit the URL at the specified hostname like `https://social.example.com` and check your instance.
+
+To customize your instance, go to the `/admin` page.
+
+### GoToSocial CLI tool
+
+You can use the [GtS CLI tool](https://docs.gotosocial.org/en/latest/admin/cli/) to conduct administration and maintenance tasks.
+
+For example, you can demote a user from an admin user to a normal user by running the command below **on the server**:
+
+```sh
+docker exec -it gotosocial /gotosocial/gotosocial admin account demote --username USERNAME_HERE
+```
+
+## Migrate an existing instance
+
+If you want to migrate your existing GoToSocial instance to another server, you can follow the procedure described as below.
+
+**Note**: the following assumes you want to migrate from **serverA** to **serverB**, but you just cave to adjust the copy commands if you are on the same server.
+
+### Stop the existing instance
+
+First, stop the existig instance by logging in to **serverA** with SSH and running the command below.
+
+```sh
+serverA$ systemctl stop gotosocial
+```
+
+### Dump database
+
+Then, dump the database by running the command below. Note that you might have to adjust the command, depending on your existing installation.
+
+```
+serverA$ pg_dump gotosocial > latest.sql
+```
+
+### Copy files to the new server
+
+After dumping the database, let's copy data to a new server by using a tool such as `rsync`. To do so, log in to **serverA** with SSH, install it if not available, and then run the commands below.
+
+```sh
+serverA$ rsync -av -e "ssh" latest.sql root@serverB:/gotosocial/
+
+serverA$ rsync -av -e "ssh" data/* root@serverB:/gotosocial/data/
+```
+
+Make sure to change the paths as necessary.
+
+### Install
+
+Next, install the service (**not starting it**) and database by running the playbook as below on your local computer:
+
+```sh
+yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=install-all
+
+yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/gotosocial/latest.sql --extra-vars=postgres_default_import_database=YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
+```
+
+Make sure to change the path and replace `YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE` with yours (specified with `gotosocial_database_name`).
+
+### Start the services
+
+After installation has completed, start the services by running the playbook:
+
+```sh
+yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=start
+```
 
 ## Troubleshooting
 
