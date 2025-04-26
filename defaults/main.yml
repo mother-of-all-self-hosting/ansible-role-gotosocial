@@ -27,6 +27,31 @@ gotosocial_gid: ''
 # The hostname at which GoToSocial is served.
 gotosocial_hostname: ''
 
+gotosocial_container_image: "{{ gotosocial_container_image_registry_prefix }}superseriousbusiness/gotosocial:{{ gotosocial_container_image_tag }}"
+gotosocial_container_image_registry_prefix: "{{ gotosocial_container_image_registry_prefix_upstream }}"
+gotosocial_container_image_registry_prefix_upstream: "{{ gotosocial_container_image_registry_prefix_upstream_default }}"
+gotosocial_container_image_registry_prefix_upstream_default: docker.io/
+gotosocial_container_image_tag: "{{ gotosocial_version }}"
+gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith(':latest') }}"
+
+# The port number in the container
+gotosocial_container_http_port: 8080
+
+# Controls whether the gotosocial container exposes its HTTP port (as defined by `gotosocial_container_http_port`).
+#
+# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:8731"), or empty string to not expose.
+gotosocial_container_http_host_bind_port: ""
+
+# The base container network. It will be auto-created by this role if it doesn't exist already.
+gotosocial_container_network: '{{ gotosocial_identifier }}'
+
+# A list of additional container networks that the container would be connected to.
+# The role does not create these networks, so make sure they already exist.
+# Use this to expose this container to another reverse proxy, which runs in a different container network.
+gotosocial_container_additional_networks: "{{ gotosocial_container_additional_networks_auto + gotosocial_container_additional_networks_custom }}"
+gotosocial_container_additional_networks_auto: []
+gotosocial_container_additional_networks_custom: []
+
 # String. Domain to use when federating profiles. This is useful when you want your server to be at
 # eg., "gts.example.org", but you want the domain on accounts to be "example.org" because it looks better
 # or is just shorter/easier to remember.
@@ -96,32 +121,8 @@ gotosocial_systemd_wanted_services_list_default: []
 gotosocial_systemd_wanted_services_list_auto: []
 gotosocial_systemd_wanted_services_list_custom: []
 
-gotosocial_container_image: "{{ gotosocial_container_image_registry_prefix }}superseriousbusiness/gotosocial:{{ gotosocial_container_image_tag }}"
-gotosocial_container_image_registry_prefix: "{{ gotosocial_container_image_registry_prefix_upstream }}"
-gotosocial_container_image_registry_prefix_upstream: "{{ gotosocial_container_image_registry_prefix_upstream_default }}"
-gotosocial_container_image_registry_prefix_upstream_default: docker.io/
-gotosocial_container_image_tag: "{{ gotosocial_version }}"
-gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith(':latest') }}"
-
-gotosocial_container_network: '{{ gotosocial_identifier }}'
-
 # Set the size of the /tmp directory, used for storing media uploads
 gotosocial_container_tmp_size: '2000m'
-
-# The port number in the container
-gotosocial_container_http_port: 8080
-
-# Controls whether the gotosocial container exposes its HTTP port (as defined by `gotosocial_container_http_port`).
-#
-# Takes an "<ip>:<port>" or "<port>" value (e.g. "127.0.0.1:8731"), or empty string to not expose.
-gotosocial_container_http_host_bind_port: ""
-
-# A list of additional container networks that the container would be connected to.
-# The role does not create these networks, so make sure they already exist.
-# Use this to expose this container to a reverse proxy, which runs in a different container network.
-gotosocial_container_additional_networks: "{{ gotosocial_container_additional_networks_auto + gotosocial_container_additional_networks_custom }}"
-gotosocial_container_additional_networks_auto: []
-gotosocial_container_additional_networks_custom: []
 
 gotosocial_database_hostname: ''
 gotosocial_database_port: 5432
