@@ -204,9 +204,9 @@ Make sure to change the paths as necessary.
 >[!NOTE]
 > If you use the MASH Ansible playbook, the paths should be set to `/mash/gotosocial/` instead of `/gotosocial/`.
 
-### Install
+### Install the service and import the database
 
-Next, install the service (**not starting it**) and database by running the playbook as below on your local computer:
+Next, install the service (**not starting it**) and import database by running the playbook as below on your local computer:
 
 ```sh
 yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=install-all
@@ -217,11 +217,12 @@ yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --e
 Make sure to change the path and replace `YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE` with yours (specified with `gotosocial_database_name`).
 
 >[!NOTE]
-> If you use the MASH Ansible playbook, run this command to import the database: `ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/mash/gotosocial/latest.sql --extra-vars=postgres_default_import_database=mash-gotosocial`
+> - Do not run `start` tag yet. Otherwise, the database would not be imported properly.
+> - If you use the MASH Ansible playbook, run this command to import the database: `ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/mash/gotosocial/latest.sql --extra-vars=postgres_default_import_database=mash-gotosocial`
 
 ### Start the services
 
-After installation has completed, start the services by running the playbook:
+After installation and importing the database have completed, start the services by running the playbook:
 
 ```sh
 yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=start
