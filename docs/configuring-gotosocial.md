@@ -204,25 +204,32 @@ Make sure to change the paths as necessary.
 >[!NOTE]
 > If you use the MASH Ansible playbook, the paths should be set to `/mash/gotosocial/` instead of `/gotosocial/`.
 
-### Install the service and import the database
+### Install the service
 
-Next, install the service (**not starting it**) and import database by running the playbook as below on your local computer:
+Next, install the service by running the playbook as below on your local computer:
 
 ```sh
 yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=install-all
+```
 
+**Do not run `start` tag yet.** Otherwise, the database could not be imported properly.
+
+### Import the database
+
+After installing it, import the database by running the playbook as below:
+
+```sh
 yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/gotosocial/latest.sql --extra-vars=postgres_default_import_database=YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
 ```
 
 Make sure to change the path and replace `YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE` with yours (specified with `gotosocial_database_name`).
 
 >[!NOTE]
-> - Do not run `start` tag yet. Otherwise, the database would not be imported properly.
-> - If you use the MASH Ansible playbook, run this command to import the database: `ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/mash/gotosocial/latest.sql --extra-vars=postgres_default_import_database=mash-gotosocial`
+> If you use the MASH Ansible playbook, run this command to import the database: `ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/mash/gotosocial/latest.sql --extra-vars=postgres_default_import_database=mash-gotosocial`
 
 ### Start the services
 
-After installation and importing the database have completed, start the services by running the playbook:
+After importing the database have completed, start the services by running the playbook:
 
 ```sh
 yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=start
