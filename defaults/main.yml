@@ -149,6 +149,18 @@ gotosocial_floc_optout_enabled: true
 # See: `gotosocial_http_header_strict_transport_security`
 gotosocial_hsts_preload_enabled: false
 
+# List of systemd services that the GoToSocial systemd service depends on
+gotosocial_systemd_required_services_list: "{{ gotosocial_systemd_required_services_list_default + gotosocial_systemd_required_services_list_auto + gotosocial_systemd_required_services_list_custom }}"
+gotosocial_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
+gotosocial_systemd_required_services_list_auto: []
+gotosocial_systemd_required_services_list_custom: []
+
+# List of systemd services that the GoToSocial systemd service wants
+gotosocial_systemd_wanted_services_list: "{{ gotosocial_systemd_wanted_services_list_default + gotosocial_systemd_wanted_services_list_auto + gotosocial_systemd_wanted_services_list_custom }}"
+gotosocial_systemd_wanted_services_list_default: []
+gotosocial_systemd_wanted_services_list_auto: []
+gotosocial_systemd_wanted_services_list_custom: []
+
 # String. Domain to use when federating profiles. This is useful when you want your server to be at
 # eg., "gts.example.org", but you want the domain on accounts to be "example.org" because it looks better
 # or is just shorter/easier to remember.
@@ -207,16 +219,6 @@ gotosocial_metrics_enabled: false
 gotosocial_metrics_auth_enabled: false
 gotosocial_metrics_auth_username: ""
 gotosocial_metrics_auth_password: ""
-
-gotosocial_systemd_required_services_list: "{{ gotosocial_systemd_required_services_list_default + gotosocial_systemd_required_services_list_auto + gotosocial_systemd_required_services_list_custom }}"
-gotosocial_systemd_required_services_list_default: "{{ [devture_systemd_docker_base_docker_service_name] if devture_systemd_docker_base_docker_service_name else [] }}"
-gotosocial_systemd_required_services_list_auto: []
-gotosocial_systemd_required_services_list_custom: []
-
-gotosocial_systemd_wanted_services_list: "{{ gotosocial_systemd_wanted_services_list_default + gotosocial_systemd_wanted_services_list_auto + gotosocial_systemd_wanted_services_list_custom }}"
-gotosocial_systemd_wanted_services_list_default: []
-gotosocial_systemd_wanted_services_list_auto: []
-gotosocial_systemd_wanted_services_list_custom: []
 
 # Set the size of the /tmp directory, used for storing media uploads
 gotosocial_container_tmp_size: '2000m'
