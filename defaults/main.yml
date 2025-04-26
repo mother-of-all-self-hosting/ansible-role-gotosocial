@@ -90,6 +90,18 @@ gotosocial_container_labels_traefik_additional_response_headers_auto: |
   }}
 gotosocial_container_labels_traefik_additional_response_headers_custom: {}
 
+# gotosocial_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
+# See `roles/custom/collabora_online/templates/labels.j2` for details.
+#
+# Example:
+# gotosocial_container_labels_additional_labels: |
+#   my.label=1
+#   another.label="here"
+gotosocial_container_labels_additional_labels: ''
+
+# A list of extra arguments to pass to the container (`docker run` command)
+gotosocial_container_extra_arguments: []
+
 # Specifies the value of the `X-XSS-Protection` header
 # Stops pages from loading when they detect reflected cross-site scripting (XSS) attacks.
 #
@@ -260,15 +272,3 @@ gotosocial_accounts_allow_custom_css: false
 #   GTS_STORAGE_S3_BUCKET=something
 #   GTS_STORAGE_S3_SECRET_KEY=verysecret
 gotosocial_environment_variables_extension: ''
-
-# gotosocial_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
-# See `roles/custom/collabora_online/templates/labels.j2` for details.
-#
-# Example:
-# gotosocial_container_labels_additional_labels: |
-#   my.label=1
-#   another.label="here"
-gotosocial_container_labels_additional_labels: ''
-
-# A list of extra arguments to pass to the container (`docker run` command)
-gotosocial_container_extra_arguments: []
