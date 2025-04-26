@@ -10,19 +10,20 @@ SPDX-FileCopyrightText: 2022 Julian Foad
 SPDX-FileCopyrightText: 2022 Warren Bailey
 SPDX-FileCopyrightText: 2023 Antonis Christofides
 SPDX-FileCopyrightText: 2023 Felix Stupp
+SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
 SPDX-FileCopyrightText: 2023 Pierre 'McFly' Marty
 SPDX-FileCopyrightText: 2024 - 2025 Suguru Hirahara
 
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-# Setting up Docmost
+# Setting up GotoSocial
 
-This is an [Ansible](https://www.ansible.com/) role which installs [Docmost](https://docmost.com/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
+This is an [Ansible](https://www.ansible.com/) role which installs [GotoSocial](https://gotosocial.org/) to run as a [Docker](https://www.docker.com/) container wrapped in a systemd service.
 
-Docmost is a free and open-source collaborative wiki and documentation software, designed for seamless real-time collaboration. It can be used to manage a wiki, a knowledge base, project documentation, etc. It has various functions such as granular permissions management system, page history to track changes of articles, etc. It also supports diagramming tools like Draw.io, Excalidraw and Mermaid.
+GoToSocial is a self-hosted [ActivityPub](https://activitypub.rocks/) social network server. With GoToSocial, you can keep in touch with your friends, post, read, and share images and articles.
 
-See the project's [documentation](https://docmost.com/docs/) to learn what Docmost does and why it might be useful to you.
+See the project's [documentation](https://docs.gotosocial.org/) to learn what GotoSocial does and why it might be useful to you.
 
 ## Prerequisites
 
