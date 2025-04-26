@@ -25,6 +25,12 @@ GoToSocial is a self-hosted [ActivityPub](https://activitypub.rocks/) social net
 
 See the project's [documentation](https://docs.gotosocial.org/) to learn what GotoSocial does and why it might be useful to you.
 
+## Prerequisites
+
+To run a GotoSocial instance it is necessary to prepare a [Postgres](https://www.postgresql.org) database server.
+
+If you are looking for an Ansible role for it, you can check out [this role (ansible-role-postgres)](https://github.com/mother-of-all-self-hosting/ansible-role-postgres) maintained by the [Mother-of-All-Self-Hosting (MASH)](https://github.com/mother-of-all-self-hosting) team.
+
 ## Adjusting the playbook configuration
 
 To enable GoToSocial with this role, add the following configuration to your `vars.yml` file.
