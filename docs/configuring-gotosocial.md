@@ -83,48 +83,6 @@ gotosocial_account_domain: "example.com"
 
 **Note**: if you enable it, please have a look at [this page on the official documentation](https://docs.gotosocial.org/en/latest/advanced/host-account-domain/) as you will have to configure the instance for it.
 
-### Configure a storage backend
-
-The service provides these storage backend options: local filesystem (default) and Amazon S3 compatible object storage.
-
-#### Local filesystem (default)
-
-**By default this role removes uploaded files when uninstalling the service**. In order to make those files persistent, you need to add a Docker volume to mount in the container, so that the directory for storing files is shared with the host machine.
-
-To add the volume, prepare a directory on the host machine and add the following configuration to your `vars.yml` file:
-
-```yaml
-gotosocial_data_path: /path/on/the/host
-```
-
-Make sure permissions of the directory specified to `/path/on/the/host`.
-
-#### Amazon S3 compatible object storage
-
-To use Amazon S3 or a S3 compatible object storage, add the following configuration to your `vars.yml` file (adapt to your needs):
-
-```yaml
-gotosocial_environment_variable_storage_driver: s3
-
-# Set a S3 access key ID
-gotosocial_environment_variable_aws_s3_access_key_id: ''
-
-# Set a S3 secret access key ID
-gotosocial_environment_variable_aws_s3_secret_access_key: ''
-
-# Set the the region where your S3 bucket is located
-gotosocial_environment_variable_aws_s3_region: ''
-
-# Set a S3 bucket name to use
-gotosocial_environment_variable_aws_s3_bucket: ''
-
-# The endpoint URL for your S3 service (optional; set if using a S3 compatible storage like Wasabi and Storj)
-gotosocial_environment_variable_aws_s3_endpoint: ''
-
-# Control whether to force path style URLs (https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#s3ForcePathStyle-property) for S3 objects
-gotosocial_environment_variable_aws_s3_force_path_style: false
-```
-
 ### Configure the mailer
 
 You can configure a mailer for functions such as user invitation. GoToSocial supports a SMTP server (default) and Postmark. To set it up, add the following common configuration and settings specific to SMTP server or Postmark to your `vars.yml` file as below (adapt to your needs):
