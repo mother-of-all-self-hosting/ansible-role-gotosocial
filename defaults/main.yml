@@ -19,7 +19,7 @@ gotosocial_data_path: "{{ gotosocial_base_path }}/data"
 gotosocial_env_path: "{{ gotosocial_config_path }}/env"
 
 # renovate: datasource=docker depName=superseriousbusiness/gotosocial versioning=semver
-gotosocial_version: 0.19.0
+gotosocial_version: 0.19.1
 
 gotosocial_uid: ''
 gotosocial_gid: ''
