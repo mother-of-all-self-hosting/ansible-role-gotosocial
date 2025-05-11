@@ -122,7 +122,7 @@ gotosocial_container_labels_traefik_additional_response_headers_auto: |
 gotosocial_container_labels_traefik_additional_response_headers_custom: {}
 
 # gotosocial_container_labels_additional_labels contains a multiline string with additional labels to add to the container label file.
-# See `roles/custom/collabora_online/templates/labels.j2` for details.
+# See `../templates/labels.j2` for details.
 #
 # Example:
 # gotosocial_container_labels_additional_labels: |
