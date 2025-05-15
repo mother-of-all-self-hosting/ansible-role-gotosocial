@@ -5,7 +5,7 @@
 
 ---
 
-- name: Fail if required gotosocial settings not defined
+- name: Fail if required GoToSocial settings not defined
   ansible.builtin.fail:
     msg: >-
       You need to define a required configuration setting (`{{ item }}`) for using this role.

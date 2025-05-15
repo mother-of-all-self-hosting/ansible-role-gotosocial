@@ -5,7 +5,7 @@
 
 ---
 
-- name: Ensure gotosocial path exists
+- name: Ensure GoToSocial paths exist
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
@@ -18,7 +18,7 @@
     - {path: "{{ gotosocial_customized_container_src_path }}", when: "{{ gotosocial_container_image_customizations_enabled }}"}
   when: item.when | bool
 
-- name: Ensure gotosocial data path exists
+- name: Ensure GoToSocial data path exists
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
@@ -39,7 +39,7 @@
     - env
     - labels
 
-- name: Ensure gotosocial container image is pulled
+- name: Ensure GoToSocial container image is pulled
   community.docker.docker_image:
     name: "{{ gotosocial_container_image }}"
     source: "{{ 'pull' if ansible_version.major > 2 or ansible_version.minor > 7 else omit }}"
