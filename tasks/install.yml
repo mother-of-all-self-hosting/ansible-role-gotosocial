@@ -71,14 +71,14 @@
           path: "{{ gotosocial_customized_container_src_path }}"
           pull: true
 
-- name: Ensure gotosocial network is created in Docker
+- name: Ensure GoToSocial container network is created
   community.docker.docker_network:
     enable_ipv6: "{{ devture_systemd_docker_base_ipv6_enabled }}"
     name: "{{ gotosocial_container_network }}"
     driver: bridge
     driver_options: "{{ devture_systemd_docker_base_container_networks_driver_options }}"
 
-- name: Ensure gotosocial.service installed
+- name: Ensure GoToSocial systemd service is present
   ansible.builtin.template:
     src: "{{ role_path }}/templates/systemd/gotosocial.service.j2"
     dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ gotosocial_identifier }}.service"
