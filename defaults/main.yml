@@ -91,7 +91,7 @@ gotosocial_container_additional_networks_custom: []
 gotosocial_container_additional_volumes: []
 
 # gotosocial_container_labels_traefik_enabled controls whether labels to assist a Traefik reverse-proxy will be attached to the container.
-# See `roles/custom/gotosocial_gotosocial/templates/labels.j2` for details.
+# See `../templates/labels.j2` for details.
 #
 # To inject your own other container labels, see `gotosocial_container_labels_additional_labels`.
 gotosocial_container_labels_traefik_enabled: false
