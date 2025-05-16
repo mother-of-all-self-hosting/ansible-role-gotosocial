@@ -193,7 +193,7 @@ gotosocial_systemd_wanted_services_list_auto: []
 gotosocial_systemd_wanted_services_list_custom: []
 
 # String. Domain to use when federating profiles. This is useful when you want your server to be at
-# eg., "gts.example.org", but you want the domain on accounts to be "example.org" because it looks better
+# eg., "gts.example.com", but you want the domain on accounts to be "example.com" because it looks better
 # or is just shorter/easier to remember.
 
 # DO NOT change this after your server has already run once, or you will break things!
