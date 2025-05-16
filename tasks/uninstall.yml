@@ -1,4 +1,5 @@
 # SPDX-FileCopyrightText: 2023 Julian-Samuel Gebühr
+# SPDX-FileCopyrightText: 2024 Slavi Pantaleev
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -11,17 +12,19 @@
 
 - when: gotosocial_service_stat.stat.exists | bool
   block:
-    - name: Ensure GoToSocial service is stopped
+    - name: Ensure GoToSocial systemd service is stopped
       ansible.builtin.service:
         name: "{{ gotosocial_identifier }}"
         state: stopped
+        enabled: false
         daemon_reload: true
-    - name: Ensure GoToSocial service doesn't exist
+
+    - name: Ensure GoToSocial systemd service does not exist
       ansible.builtin.file:
-        dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ gotosocial_identifier }}.service"
+        path: "{{ devture_systemd_docker_base_systemd_path }}/{{ gotosocial_identifier }}.service"
         state: absent
 
-    - name: Ensure GoToSocial base path is files deleted (make sure to delete node data)
+    - name: Ensure GoToSocial path does not exist
       ansible.builtin.file:
         path: "{{ gotosocial_base_path }}"
         state: absent
