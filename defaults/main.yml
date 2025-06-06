@@ -245,7 +245,7 @@ gotosocial_instance_languages: []
 # https://docs.gotosocial.org/en/latest/advanced/metrics/
 gotosocial_metrics_enabled: false
 
-# Bool. Enable HTTP Basic Authentication for Prometheus metrics endpoint.
+# Bool. Enable HTTP Basic authentication for Prometheus metrics endpoint.
 # You also have to set gotosocial_metrics_auth_username gotosocial_metrics_auth_password
 gotosocial_metrics_auth_enabled: false
 gotosocial_metrics_auth_username: ""
