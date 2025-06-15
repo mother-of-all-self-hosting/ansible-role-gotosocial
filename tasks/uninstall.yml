@@ -4,13 +4,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-
 - name: Check existence of GoToSocial systemd service
   ansible.builtin.stat:
     path: "{{ devture_systemd_docker_base_systemd_path }}/{{ gotosocial_identifier }}.service"
   register: gotosocial_service_stat
 
-- when: gotosocial_service_stat.stat.exists | bool
+- name: Uninstall GoToSocial systemd services and files
+  when: gotosocial_service_stat.stat.exists | bool
   block:
     - name: Ensure GoToSocial systemd service is stopped
       ansible.builtin.service:
