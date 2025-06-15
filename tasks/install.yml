@@ -4,25 +4,24 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-
 - name: Ensure GoToSocial paths exist
   ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
-    mode: 0700
+    mode: "0700"
     owner: "{{ gotosocial_uid }}"
     group: "{{ gotosocial_gid }}"
   with_items:
-    - {path: "{{ gotosocial_base_path }}", when: true}
-    - {path: "{{ gotosocial_config_path }}", when: true}
-    - {path: "{{ gotosocial_customized_container_src_path }}", when: "{{ gotosocial_container_image_customizations_enabled }}"}
+    - { path: "{{ gotosocial_base_path }}", when: true }
+    - { path: "{{ gotosocial_config_path }}", when: true }
+    - { path: "{{ gotosocial_customized_container_src_path }}", when: "{{ gotosocial_container_image_customizations_enabled }}" }
   when: item.when | bool
 
 - name: Ensure GoToSocial data path exists
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: 0755
+    mode: "0755"
     owner: "{{ gotosocial_uid }}"
     group: "{{ gotosocial_gid }}"
   with_items:
@@ -32,7 +31,7 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/{{ item }}.j2"
     dest: "{{ gotosocial_base_path }}/{{ item }}"
-    mode: 0640
+    mode: "0640"
     owner: "{{ gotosocial_uid }}"
     group: "{{ gotosocial_gid }}"
   with_items:
@@ -57,7 +56,7 @@
       ansible.builtin.template:
         src: "{{ role_path }}/templates/customizations/Dockerfile.j2"
         dest: "{{ gotosocial_customized_container_src_path }}/Dockerfile"
-        mode: 0640
+        mode: "0640"
         owner: "{{ gotosocial_uid }}"
         group: "{{ gotosocial_gid }}"
       register: gotosocial_container_image_customizations_dockerfile_result
@@ -83,4 +82,4 @@
   ansible.builtin.template:
     src: "{{ role_path }}/templates/systemd/gotosocial.service.j2"
     dest: "{{ devture_systemd_docker_base_systemd_path }}/{{ gotosocial_identifier }}.service"
-    mode: 0644
+    mode: "0644"
