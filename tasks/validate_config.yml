@@ -12,6 +12,7 @@
       Please change your configuration to rename the variable (`{{ item.old }}` -> `{{ item.new }}`).
   when: "item.old in vars"
   with_items:
+    - { "old": "gotosocial_config_path", "new": "<Removed>" }
     - { "old": "gotosocial_env_path", "new": "<Removed>" }
     - { "old": "gotosocial_environment_variables_extension", "new": "gotosocial_environment_variables_additional_variables" }
 

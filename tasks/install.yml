@@ -13,7 +13,6 @@
     group: "{{ gotosocial_gid }}"
   with_items:
     - { path: "{{ gotosocial_base_path }}", when: true }
-    - { path: "{{ gotosocial_config_path }}", when: true }
     - { path: "{{ gotosocial_customized_container_src_path }}", when: "{{ gotosocial_container_image_customizations_enabled }}" }
   when: item.when | bool
 

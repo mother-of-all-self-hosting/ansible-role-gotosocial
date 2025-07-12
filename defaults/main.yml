@@ -14,7 +14,6 @@ gotosocial_enabled: true
 
 gotosocial_identifier: gotosocial
 gotosocial_base_path: "/{{ gotosocial_identifier }}"
-gotosocial_config_path: "{{ gotosocial_base_path }}/config"
 gotosocial_data_path: "{{ gotosocial_base_path }}/data"
 gotosocial_customized_container_src_path: "{{ gotosocial_base_path }}/customized-container-src"
 
