@@ -286,10 +286,10 @@ gotosocial_media_description_min_chars: 0
 gotosocial_media_description_max_chars: 1500
 
 # Include the client IP in the log GTS log
-gotosocial_log_client_IP: true
+gotosocial_log_client_ip: true
 
 # Allow custom CSS: https://docs.gotosocial.org/en/latest/user_guide/custom_css/
-# Make sure you undestand the security implications when overwriting this setting: https://docs.gotosocial.org/en/latest/configuration/accounts/
+# Make sure you understand the security implications when overwriting this setting: https://docs.gotosocial.org/en/latest/configuration/accounts/
 gotosocial_accounts_allow_custom_css: false
 
 # Additional environment variables to pass to the GoToSocial container.
