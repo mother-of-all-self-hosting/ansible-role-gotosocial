@@ -59,7 +59,7 @@
   until: result is not failed
   changed_when: "'Downloaded newer image' in result.stdout"
 
-- name: Ensure customized GoToSocial container image is built
+- name: Run if container image customizations are enabled
   when: gotosocial_container_image_customizations_enabled | bool
   block:
     - name: Ensure customizations Dockerfile is created
