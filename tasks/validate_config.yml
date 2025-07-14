@@ -13,6 +13,7 @@
   when: "item.old in vars"
   with_items:
     - { "old": "gotosocial_config_path", "new": "<Removed>" }
+    - { "old": "gotosocial_database_host", "new": "gotosocial_database_hostname" }
     - { "old": "gotosocial_env_path", "new": "<Removed>" }
     - { "old": "gotosocial_environment_variables_extension", "new": "gotosocial_environment_variables_additional_variables" }
 
