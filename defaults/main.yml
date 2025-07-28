@@ -92,7 +92,7 @@ gotosocial_container_additional_volumes: []
 # See `../templates/labels.j2` for details.
 #
 # To inject your own other container labels, see `gotosocial_container_labels_additional_labels`.
-gotosocial_container_labels_traefik_enabled: false
+gotosocial_container_labels_traefik_enabled: true
 gotosocial_container_labels_traefik_docker_network: ""
 gotosocial_container_labels_traefik_entrypoints: web-secure
 gotosocial_container_labels_traefik_priority: 0
