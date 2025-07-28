@@ -100,7 +100,7 @@ gotosocial_container_labels_traefik_tls: "{{ gotosocial_container_labels_traefik
 gotosocial_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
 # Controls which additional headers to attach to all HTTP requests.
-# To add your own custom request headers, use `gotosocial_container_labels_traefik_additional_response_headers_custom`
+# To add your own custom request headers, use `gotosocial_container_labels_traefik_additional_request_headers_custom`
 gotosocial_container_labels_traefik_additional_request_headers: "{{ gotosocial_container_labels_traefik_additional_request_headers_auto | combine(gotosocial_container_labels_traefik_additional_request_headers_custom) }}"
 gotosocial_container_labels_traefik_additional_request_headers_auto: {}
 gotosocial_container_labels_traefik_additional_request_headers_custom: {}
