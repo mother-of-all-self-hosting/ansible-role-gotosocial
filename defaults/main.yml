@@ -26,6 +26,8 @@ gotosocial_gid: ''
 # The hostname at which GoToSocial is served.
 gotosocial_hostname: ''
 
+gotosocial_path_prefix: /
+
 gotosocial_container_image: "{{ gotosocial_container_image_registry_prefix }}superseriousbusiness/gotosocial:{{ gotosocial_container_image_tag }}"
 gotosocial_container_image_registry_prefix: "{{ gotosocial_container_image_registry_prefix_upstream }}"
 gotosocial_container_image_registry_prefix_upstream: "{{ gotosocial_container_image_registry_prefix_upstream_default }}"
@@ -93,9 +95,13 @@ gotosocial_container_additional_volumes: []
 #
 # To inject your own other container labels, see `gotosocial_container_labels_additional_labels`.
 gotosocial_container_labels_traefik_enabled: true
-gotosocial_container_labels_traefik_docker_network: ""
-gotosocial_container_labels_traefik_entrypoints: web-secure
+gotosocial_container_labels_traefik_docker_network: "{{ gotosocial_container_network }}"
+gotosocial_container_labels_traefik_hostname: "{{ gotosocial_hostname }}"
+# The path prefix must either be `/` or not end with a slash (e.g. `/gotosocial`).
+gotosocial_container_labels_traefik_path_prefix: "{{ gotosocial_path_prefix }}"
+gotosocial_container_labels_traefik_rule: "Host(`{{ gotosocial_container_labels_traefik_hostname }}`){% if gotosocial_container_labels_traefik_path_prefix != '/' %} && PathPrefix(`{{ gotosocial_container_labels_traefik_path_prefix }}`){% endif %}"
 gotosocial_container_labels_traefik_priority: 0
+gotosocial_container_labels_traefik_entrypoints: web-secure
 gotosocial_container_labels_traefik_tls: "{{ gotosocial_container_labels_traefik_entrypoints != 'web' }}"
 gotosocial_container_labels_traefik_tls_certResolver: default  # noqa var-naming
 
