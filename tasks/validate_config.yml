@@ -23,7 +23,12 @@
       You need to define a required configuration setting (`{{ item }}`).
   when: "lookup('vars', item, default='') | string | length == 0"
   with_items:
+    - gotosocial_identifier
+    - gotosocial_uid
+    - gotosocial_gid
     - gotosocial_hostname
+    - gotosocial_path_prefix
+    - gotosocial_container_network
 
 - name: Fail if SMTP settings are missing (and SMTP is enabled by setting host)
   ansible.builtin.fail:
