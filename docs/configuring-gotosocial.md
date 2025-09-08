@@ -144,13 +144,13 @@ After running the command for installation, you can create user account(s).
 Run this command to create an **administrator** user account:
 
 ```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=gotosocial-add-admin --extra-vars=username=YOUR_USERNAME_HERE --extra-vars=password=YOUR_PASSWORD_HERE --extra-vars=email=YOUR_EMAIL_ADDRESS_HERE
+ansible-playbook -i inventory/hosts setup.yml --tags=gotosocial-add-admin -e username=YOUR_USERNAME_HERE -e password=YOUR_PASSWORD_HERE -e email=YOUR_EMAIL_ADDRESS_HERE
 ```
 
 Run this command to create a **regular** (non-administrator) user account:
 
 ```sh
-ansible-playbook -i inventory/hosts setup.yml --tags=gotosocial-add-user --extra-vars=username=YOUR_USERNAME_HERE --extra-vars=password=YOUR_PASSWORD_HERE --extra-vars=email=YOUR_EMAIL_ADDRESS_HERE
+ansible-playbook -i inventory/hosts setup.yml --tags=gotosocial-add-user -e username=YOUR_USERNAME_HERE -e password=YOUR_PASSWORD_HERE -e email=YOUR_EMAIL_ADDRESS_HERE
 ```
 
 Now you should be able to visit the URL at the specified hostname like `https://social.example.com` and check your instance.
@@ -219,13 +219,13 @@ yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=install-all
 After installing it, import the database by running the playbook as below:
 
 ```sh
-yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/gotosocial/latest.sql --extra-vars=postgres_default_import_database=YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
+yourPC$ ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres -e server_path_postgres_dump=/gotosocial/latest.sql -e postgres_default_import_database=YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
 ```
 
 Make sure to change the path and replace `YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE` with yours (specified with `gotosocial_database_name`).
 
 >[!NOTE]
-> If you use the MASH Ansible playbook, run this command to import the database: `ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres --extra-vars=server_path_postgres_dump=/mash/gotosocial/latest.sql --extra-vars=postgres_default_import_database=mash-gotosocial`
+> If you use the MASH Ansible playbook, run this command to import the database: `ansible-playbook -i inventory/hosts setup.yml --tags=import-postgres -e server_path_postgres_dump=/mash/gotosocial/latest.sql -e postgres_default_import_database=mash-gotosocial`
 
 ### Start the services
 
