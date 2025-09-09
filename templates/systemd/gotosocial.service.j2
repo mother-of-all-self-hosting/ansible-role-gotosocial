@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 #}
 
 [Unit]
-Description=GotoSocial ActivityPub Server ({{ gotosocial_identifier }})
+Description=GoToSocial ActivityPub Server ({{ gotosocial_identifier }})
 {% for service in gotosocial_systemd_required_services_list %}
 Requires={{ service }}
 After={{ service }}
