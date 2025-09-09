@@ -27,9 +27,9 @@ See the project's [documentation](https://docs.gotosocial.org/) to learn what Go
 
 ## Prerequisites
 
-To run a GotoSocial instance it is necessary to prepare a [Postgres](https://www.postgresql.org) database server.
+To run a GoToSocial instance it is necessary to prepare a database. You can use a [SQLite](https://www.sqlite.org/) or [Postgres](https://www.postgresql.org/). By default it is configured to use SQLite.
 
-If you are looking for an Ansible role for it, you can check out [this role (ansible-role-postgres)](https://github.com/mother-of-all-self-hosting/ansible-role-postgres) maintained by the [Mother-of-All-Self-Hosting (MASH)](https://github.com/mother-of-all-self-hosting) team.
+If you are looking for an Ansible role for Postgres, you can check out [this role (ansible-role-postgres)](https://github.com/mother-of-all-self-hosting/ansible-role-postgres) maintained by the [Mother-of-All-Self-Hosting (MASH)](https://github.com/mother-of-all-self-hosting) team.
 
 ## Adjusting the playbook configuration
 
@@ -83,19 +83,17 @@ gotosocial_account_domain: "example.com"
 
 **Note**: if you enable it, please have a look at [this page on the official documentation](https://docs.gotosocial.org/en/latest/advanced/host-account-domain/) as you will have to configure the instance for it.
 
-### Set variables for connecting to a Postgres database server
+### Specify database (optional)
 
-To use a Postgres server, add the following configuration to your `vars.yml` file.
+You can specify a database used by GoToSocial. By default it is configured to use SQLite. It is sufficient for small instances and single-board computers, where a dedicated database would be overkill. The SQLite database is stored in the directory specified with `gotosocial_database_path`.
 
-```yml
-gotosocial_database_hostname: YOUR_POSTGRES_SERVER_HOSTNAME_HERE
-gotosocial_database_port: 5432
-gotosocial_database_name: YOUR_POSTGRES_SERVER_DATABASE_NAME_HERE
-gotosocial_database_username: YOUR_POSTGRES_SERVER_USERNAME_HERE
-gotosocial_database_password: YOUR_POSTGRES_SERVER_PASSWORD_HERE
+To use Postgres, add the following configuration to your `vars.yml` file:
+
+```yaml
+gotosocial_database_type: postgres
 ```
 
-Make sure to replace values for variables with yours.
+For other settings, check variables such as `gotosocial_database_*` on [`defaults/main.yml`](../defaults/main.yml).
 
 ### Configure the mailer
 
@@ -169,7 +167,7 @@ docker exec -it gotosocial /gotosocial/gotosocial admin account demote --usernam
 
 ## Migrate an existing instance
 
-If you want to migrate your existing GoToSocial instance to another server, you can follow the procedure described as below.
+If you want to migrate your existing GoToSocial instance with a Postgres database to another server, you can follow the procedure described as below.
 
 **Note**: the following assumes you will migrate from **serverA** to **serverB**. Adjust the commands for copying files, if you are migrating on the same server (from an existing GoToSocial instance to the new one to start managing it with a playbook, for example).
 
