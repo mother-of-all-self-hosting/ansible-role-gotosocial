@@ -8,7 +8,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 ---
-# Project source code URL: https://github.com/superseriousbusiness/gotosocial
+# Project source code URL: https://codeberg.org/superseriousbusiness/gotosocial
 
 gotosocial_enabled: true
 
