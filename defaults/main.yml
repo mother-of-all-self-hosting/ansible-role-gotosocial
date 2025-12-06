@@ -128,7 +128,7 @@ gotosocial_container_labels_metrics_middlewares: []
 gotosocial_container_labels_metrics_tls: "{{ gotosocial_container_labels_metrics_entrypoints != 'web' }}"
 gotosocial_container_labels_metrics_tls_certResolver: "{{ gotosocial_container_labels_traefik_tls_certResolver }}"  # noqa var-naming
 gotosocial_container_labels_metrics_middleware_basic_auth_enabled: false
-# See: https://doc.traefik.io/traefik/middlewares/http/basicauth/#users
+# See: https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/basicauth/
 gotosocial_container_labels_metrics_middleware_basic_auth_users: ""
 
 # Controls which additional headers to attach to all HTTP requests.
