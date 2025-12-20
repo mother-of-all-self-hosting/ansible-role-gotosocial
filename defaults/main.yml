@@ -324,6 +324,9 @@ gotosocial_log_client_ip: true
 # Make sure you understand the security implications when overwriting this setting: https://docs.gotosocial.org/en/latest/configuration/accounts/
 gotosocial_accounts_allow_custom_css: false
 
+# Specify the timezone
+gotosocial_environment_variables_tz: UTC
+
 # Controls the OTEL_METRICS_PRODUCERS environment variable.
 # Only relevant if `gotosocial_metrics_enabled` is true.
 gotosocial_environment_variable_otel_metrics_producers: prometheus
