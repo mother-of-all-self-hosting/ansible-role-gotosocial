@@ -163,7 +163,7 @@ gotosocial_container_labels_additional_labels: "{{ gotosocial_container_labels_a
 gotosocial_container_labels_additional_labels_auto: {}
 gotosocial_container_labels_additional_labels_custom: {}
 
-# A list of extra arguments to pass to the container (`docker run` command)
+# A list of extra arguments to pass to the container (`docker create` command)
 gotosocial_container_extra_arguments: "{{ gotosocial_container_extra_arguments_auto + gotosocial_container_extra_arguments_custom }}"
 gotosocial_container_extra_arguments_auto: []
 gotosocial_container_extra_arguments_custom: []
