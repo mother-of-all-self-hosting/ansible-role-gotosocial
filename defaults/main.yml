@@ -85,7 +85,7 @@ gotosocial_container_metrics_port: 9464
 gotosocial_container_metrics_host_bind_port: ""
 
 # The base container network. It will be auto-created by this role if it doesn't exist already.
-gotosocial_container_network: '{{ gotosocial_identifier }}'
+gotosocial_container_network: "{{ gotosocial_identifier }}"
 
 # A list of additional container networks that the container would be connected to.
 # The role does not create these networks, so make sure they already exist.
