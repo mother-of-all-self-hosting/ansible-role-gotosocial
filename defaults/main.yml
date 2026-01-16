@@ -165,6 +165,9 @@ gotosocial_container_labels_additional_labels: "{{ gotosocial_container_labels_a
 gotosocial_container_labels_additional_labels_auto: []
 gotosocial_container_labels_additional_labels_custom: []
 
+# Specify the size of the container's tmpfs volume, used for storing media uploads
+gotosocial_container_tmpfs_tmp_size: 2000m
+
 # A list of extra arguments to pass to the container (`docker create` command)
 gotosocial_container_extra_arguments: "{{ gotosocial_container_extra_arguments_auto + gotosocial_container_extra_arguments_custom }}"
 gotosocial_container_extra_arguments_auto: []
@@ -281,9 +284,6 @@ gotosocial_instance_languages: []
 
 # https://docs.gotosocial.org/en/latest/advanced/metrics/
 gotosocial_metrics_enabled: false
-
-# Specify the size of the container's tmpfs volume, used for storing media uploads
-gotosocial_container_tmpfs_tmp_size: 2000m
 
 # Specify database to use
 # Valid values: postgres, sqlite
