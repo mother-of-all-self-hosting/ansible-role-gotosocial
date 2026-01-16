@@ -282,8 +282,8 @@ gotosocial_instance_languages: []
 # https://docs.gotosocial.org/en/latest/advanced/metrics/
 gotosocial_metrics_enabled: false
 
-# Set the size of the /tmp directory, used for storing media uploads
-gotosocial_container_tmp_size: '2000m'
+# Specify the size of the container's tmpfs volume, used for storing media uploads
+gotosocial_container_tmpfs_tmp_size: 2000m
 
 # Specify database to use
 # Valid values: postgres, sqlite
