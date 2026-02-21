@@ -359,3 +359,13 @@ gotosocial_environment_variable_otel_exporter_prometheus_port: "{{ gotosocial_co
 #   GTS_STORAGE_S3_BUCKET=something
 #   GTS_STORAGE_S3_SECRET_KEY=verysecret
 gotosocial_environment_variables_additional_variables: ""
+
+# gotosocial_restart_necessary controls whether the GoToSocial systemd
+# service will be restarted (when true) or merely started (when false) by the
+# systemd service manager role (when conditional restart is enabled).
+#
+# This value is automatically computed during installation based on whether
+# any configuration files, the systemd service file, or the container image changed.
+# The default of `false` means "no restart needed" — appropriate when the role's
+# installation tasks haven't run (e.g., due to --tags skipping them).
+gotosocial_restart_necessary: false
