@@ -331,6 +331,7 @@ gotosocial_database_username: gotosocial
 gotosocial_database_password: ""
 # Specify SSL mode for Postgres database server
 # By default, we expect a local container (without SSL), so attempting SSL connections is not necessary.
+# Valid values: see https://docs.gotosocial.org/en/stable/configuration/database/
 gotosocial_database_sslmode: disable
 gotosocial_database_name: gotosocial
 
