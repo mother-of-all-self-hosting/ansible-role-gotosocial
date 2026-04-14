@@ -22,13 +22,13 @@
   ansible.builtin.set_fact:
     initial_role: user
   tags:
-    - gotosocial-add-user
+    - create-user-gotosocial
 
 - name: Set fact for an admin user
   ansible.builtin.set_fact:
     initial_role: admin
   tags:
-    - gotosocial-add-admin
+    - create-admin-gotosocial
 
 - name: Set fact for adding a user
   ansible.builtin.set_fact:
