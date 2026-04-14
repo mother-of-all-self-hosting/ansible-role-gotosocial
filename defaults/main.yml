@@ -327,7 +327,7 @@ gotosocial_account_domain: "{{ gotosocial_hostname }}"
 #     initial_password: password
 #     initial_type: admin
 #   - username: user
-#     initial_email: admin@example.com
+#     initial_email: user@example.com
 #     initial_password: password
 #     initial_type: user
 gotosocial_users: "{{ gotosocial_users_auto + gotosocial_users_additional }}"

@@ -192,7 +192,7 @@ gotosocial_users_additional:
     initial_password: password
     initial_type: admin
   - username: user
-    initial_email: admin@example.com
+    initial_email: user@example.com
     initial_password: password
     initial_type: user
 ```
