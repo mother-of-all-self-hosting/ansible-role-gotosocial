@@ -177,7 +177,7 @@ Run `create-admin-gotosocial` to create an administrator.
 
 #### Creating users automatically
 
-It is also possible to create muitiple users specified with `gotosocial_users_custom` on your `vars.yml` file by running the command below:
+It is also possible to create muitiple users specified with `gotosocial_users_additional` on your `vars.yml` file by running the command below:
 
 ```sh
 ansible-playbook -i inventory/hosts setup.yml --tags=ensure-gotosocial-users-created
