@@ -11,19 +11,19 @@
     password is not defined or password == 'PASSWORD_HERE' or
     email is not defined or email == 'EMAIL_ADDRESS_HERE'
 
-- name: Set fact for a normal user
+- name: Set the initial role to 'user' when running 'create-user-gotosocial' for GoToSocial
   ansible.builtin.set_fact:
     initial_role: user
   tags:
     - create-user-gotosocial
 
-- name: Set fact for an admin user
+- name: Set the initial role to 'admin' when running 'create-admin-gotosocial' for GoToSocial
   ansible.builtin.set_fact:
     initial_role: admin
   tags:
     - create-admin-gotosocial
 
-- name: Set fact for adding a user
+- name: Set user details for GoToSocial
   ansible.builtin.set_fact:
     user:
       username: "{{ username }}"
