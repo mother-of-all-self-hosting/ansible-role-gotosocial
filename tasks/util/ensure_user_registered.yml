@@ -14,6 +14,7 @@
   register: gotosocial_create_account_result
   changed_when: gotosocial_create_account_result.rc == 0 and 'is already in use' not in gotosocial_create_account_result.stderr
   failed_when: gotosocial_create_account_result.rc > 0 and 'is already in use' not in gotosocial_create_account_result.stderr
+  no_log: true # Hide raw password
 
 - name: Ensure GoToSocial user is promoted - {{ user.username | quote }}
   ansible.builtin.command:
