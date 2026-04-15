@@ -30,6 +30,7 @@
       initial_email: "{{ email }}"
       initial_password: "{{ password }}"
       initial_type: "{{ initial_role }}"
+  no_log: true # hide raw password
 
 - name: Ensure GoToSocial service is started
   ansible.builtin.service:
