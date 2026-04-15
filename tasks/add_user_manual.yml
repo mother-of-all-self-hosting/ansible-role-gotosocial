@@ -8,8 +8,8 @@
     msg: "The `username`, `password`, and `email` variables need to be provided via --extra-vars"
   when: >-
     username is not defined or username == 'USERNAME_HERE' or
-    password is not defined or password == 'PASSWORD_HERE' or
-    email is not defined or email == 'EMAIL_ADDRESS_HERE'
+    email is not defined or email == 'EMAIL_ADDRESS_HERE' or
+    password is not defined or password == 'PASSWORD_HERE'
 
 - name: Set the initial role to 'user' when running 'create-user-gotosocial' for GoToSocial
   ansible.builtin.set_fact:
