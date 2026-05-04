@@ -37,7 +37,6 @@ gotosocial_container_image_registry_prefix: "{{ gotosocial_container_image_regis
 gotosocial_container_image_registry_prefix_upstream: "{{ gotosocial_container_image_registry_prefix_upstream_default }}"
 gotosocial_container_image_registry_prefix_upstream_default: docker.io/
 gotosocial_container_image_tag: "{{ gotosocial_version }}"
-gotosocial_container_image_force_pull: "{{ gotosocial_container_image.endswith(':latest') }}"
 
 # gotosocial_container_image_customized is the name of the locally built GoToSocial image
 # which adds various customizations on top of the original (upstream) GoToSocial image.
