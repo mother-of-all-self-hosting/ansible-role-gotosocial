@@ -27,6 +27,10 @@ provisioner:
   inventory:
     group_vars:
       all:
+        # Helper variables
+        gotosocial_debug_service_enabled: false
+
+        # Variables for GoToSocial
         gotosocial_uid: 1000
         gotosocial_gid: 1000
         gotosocial_hostname: gotosocial
