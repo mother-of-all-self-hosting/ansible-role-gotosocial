@@ -33,7 +33,7 @@ provisioner:
         # Variables for GoToSocial
         gotosocial_uid: 1000
         gotosocial_gid: 1000
-        gotosocial_hostname: gotosocial
+        gotosocial_hostname: localhost
         gotosocial_container_labels_traefik_enabled: false
         gotosocial_container_http_host_bind_port: 8080
         gotosocial_database_type: sqlite
