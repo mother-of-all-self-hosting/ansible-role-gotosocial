@@ -164,9 +164,9 @@
     - name: Show the GoToSocial verification summary
       ansible.builtin.debug:
         msg:
-          - "systemd: {{ gotosocial_service.status.ActiveState }}"
-          - "postgres systemd: {{ postgres_service.status.ActiveState }}"
-          - "postgres tables: {{ gotosocial_postgres_tables.stdout | trim }}"
-          - "web frontend: HTTP {{ gotosocial_frontend.status }}"
-          - "nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
-          - "instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
+          - "GoToSocial systemd: {{ gotosocial_service.status.ActiveState }}"
+          - "GoToSocial postgres systemd: {{ postgres_service.status.ActiveState }}"
+          - "GoToSocial postgres tables: {{ gotosocial_postgres_tables.stdout | trim }}"
+          - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
+          - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
+          - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
