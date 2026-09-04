@@ -27,9 +27,6 @@
     - name: Run the shared GoToSocial verification
       ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
 
-    # Everything above would also pass against SQLite, so the point of this
-    # scenario is only made by looking into Postgres itself: GoToSocial having
-    # run its migrations there proves it really is the backing database.
     # The docker CLI is invoked directly, because the lint environment used in
     # CI has no collections beyond ansible-core available.
     - name: Count the GoToSocial tables in the Postgres database
