@@ -10,11 +10,10 @@
   become: true
   gather_facts: false
   tasks:
-    # This playbook runs on its own, so the role's defaults are not in scope
-    # here. Reading them from the controller keeps the expected version tied to
-    # defaults/main.yml, instead of duplicating it into the scenario's
-    # group_vars where it would quietly drift out of date.
-    - name: Load the GoToSocial role defaults
+    # The role is not included in this playbook, so its defaults are not in
+    # scope. Reading defaults/main.yml directly ties the version assertion
+    # below.
+    - name: Load the role defaults
       ansible.builtin.include_vars:
         file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
         name: gotosocial_defaults
