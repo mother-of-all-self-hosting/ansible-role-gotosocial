@@ -1,0 +1,122 @@
+# SPDX-FileCopyrightText: 2026 Slavi Pantaleev
+# SPDX-FileCopyrightText: 2026 spatterlight
+# SPDX-FileCopyrightText: 2026 Suguru Hirahara
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+---
+# The role is not included in this playbook, so its defaults are not in
+# scope. Reading defaults/main.yml directly ties the version assertion
+# below.
+- name: Load the role defaults
+  ansible.builtin.include_vars:
+    file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
+    name: gotosocial_defaults
+
+- name: Wait for GoToSocial service to become active (up to 180s)
+  ansible.builtin.systemd:
+    name: gotosocial.service
+  register: gotosocial_service
+  until: gotosocial_service.status.ActiveState == 'active'
+  retries: 36
+  delay: 5
+
+- name: Assert GoToSocial service is active
+  ansible.builtin.assert:
+    that: gotosocial_service.status.ActiveState == 'active'
+    fail_msg: "gotosocial.service not active ({{ gotosocial_service.status.ActiveState }})"
+    success_msg: "gotosocial.service is active"
+
+- name: Retrieve GoToSocial service log for debugging
+  when: gotosocial_debug_service_enabled | bool
+  ansible.builtin.command:
+    cmd: journalctl -xeu gotosocial.service
+  changed_when: false
+
+# The web frontend is served by the same process that serves the API, so a
+# successful response here means GoToSocial got as far as listening.
+- name: Wait for the GoToSocial web frontend to respond (up to 5m)
+  ansible.builtin.uri:
+    url: "http://localhost:{{ gotosocial_container_http_host_bind_port }}/"
+    method: GET
+    status_code: [200, 302]
+    follow_redirects: none
+  register: gotosocial_frontend
+  until: gotosocial_frontend.status in [200, 302]
+  retries: 60
+  delay: 5
+
+- name: Assert the GoToSocial web frontend is served
+  ansible.builtin.assert:
+    that: gotosocial_frontend.status in [200, 302]
+    fail_msg: "The GoToSocial web frontend did not respond as expected ({{ gotosocial_frontend.status | default('no response') }})"
+    success_msg: "The GoToSocial web frontend responded with {{ gotosocial_frontend.status }}"
+
+# NodeInfo discovery is a federation-facing endpoint. Serving it correctly
+# means the instance is configured well enough to describe itself to peers,
+# which a merely-running process would not manage.
+- name: Retrieve the GoToSocial NodeInfo discovery document
+  ansible.builtin.uri:
+    url: "http://localhost:{{ gotosocial_container_http_host_bind_port }}/.well-known/nodeinfo"
+    method: GET
+    status_code: 200
+    return_content: true
+  register: gotosocial_nodeinfo_discovery
+  until: gotosocial_nodeinfo_discovery.status == 200
+  retries: 12
+  delay: 5
+
+- name: Assert the GoToSocial NodeInfo discovery document advertises a schema
+  ansible.builtin.assert:
+    that:
+      - gotosocial_nodeinfo_discovery.json.links | default([]) | length > 0
+      - gotosocial_nodeinfo_discovery.json.links | map(attribute='href') | select('search', '/nodeinfo/2\\.') | list | length > 0
+    fail_msg: "The GoToSocial NodeInfo discovery document did not advertise a NodeInfo 2.x schema: {{ gotosocial_nodeinfo_discovery.content | default('no content') }}"
+    success_msg: "The GoToSocial NodeInfo discovery document advertises a NodeInfo 2.x schema"
+
+# The NodeInfo schema document names the software that is actually running,
+# which is what ties this test to the container image the role points at.
+- name: Retrieve the GoToSocial NodeInfo schema document
+  ansible.builtin.uri:
+    url: "http://localhost:{{ gotosocial_container_http_host_bind_port }}/nodeinfo/2.0"
+    method: GET
+    status_code: 200
+    return_content: true
+  register: gotosocial_nodeinfo
+
+- name: Assert the GoToSocial NodeInfo schema document reports GoToSocial
+  ansible.builtin.assert:
+    that: gotosocial_nodeinfo.json.software.name | default('') | lower == 'gotosocial'
+    fail_msg: "The GoToSocial NodeInfo schema document did not report GoToSocial: {{ gotosocial_nodeinfo.content | default('no content') }}"
+    success_msg: "The GoToSocial NodeInfo schema document reports GoToSocial {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
+
+# Renovate bumps `gotosocial_version`, so the version that is actually
+# running is asserted here - otherwise a bump could go green without the
+# bumped image ever having been exercised.
+- name: Assert the running GoToSocial is the version the role points at
+  vars:
+    gotosocial_expected_version: "{{ gotosocial_defaults.gotosocial_version }}"
+  ansible.builtin.assert:
+    that: gotosocial_expected_version in (gotosocial_nodeinfo.json.software.version | default(''))
+    fail_msg: >-
+      Expected GoToSocial {{ gotosocial_expected_version }} to be running, but NodeInfo reports
+      '{{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}'
+    success_msg: "GoToSocial {{ gotosocial_expected_version }} is the version actually running"
+
+# The Mastodon-compatible instance API is what clients talk to first.
+- name: Retrieve the GoToSocial instance API document
+  ansible.builtin.uri:
+    url: "http://localhost:{{ gotosocial_container_http_host_bind_port }}/api/v1/instance"
+    method: GET
+    status_code: 200
+    return_content: true
+  register: gotosocial_instance_api
+
+- name: Assert the GoToSocial instance API describes this instance
+  ansible.builtin.assert:
+    that:
+      - gotosocial_instance_api.json.uri | default('') | length > 0
+      - gotosocial_hostname in gotosocial_instance_api.json.uri
+      - gotosocial_instance_api.json.version | default('') | length > 0
+    fail_msg: "The GoToSocial instance API did not describe this instance: {{ gotosocial_instance_api.content | default('no content') }}"
+    success_msg: "The GoToSocial instance API describes '{{ gotosocial_instance_api.json.uri }}'"
