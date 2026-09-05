@@ -90,18 +90,11 @@
     fail_msg: "The GoToSocial NodeInfo schema document did not report GoToSocial: {{ gotosocial_nodeinfo.content | default('no content') }}"
     success_msg: "The GoToSocial NodeInfo schema document reports GoToSocial {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
 
-# Renovate bumps `gotosocial_version`, so the version that is actually
-# running is asserted here - otherwise a bump could go green without the
-# bumped image ever having been exercised.
-- name: Assert the running GoToSocial is the version the role points at
-  vars:
-    gotosocial_expected_version: "{{ gotosocial_defaults.gotosocial_version }}"
+- name: Assert the running GoToSocial is the version this role installs
   ansible.builtin.assert:
-    that: gotosocial_expected_version in (gotosocial_nodeinfo.json.software.version | default(''))
-    fail_msg: >-
-      Expected GoToSocial {{ gotosocial_expected_version }} to be running, but NodeInfo reports
-      '{{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}'
-    success_msg: "GoToSocial {{ gotosocial_expected_version }} is the version actually running"
+    that: "gotosocial_nodeinfo.json.software.version | regex_replace('\\+git-.*?$', '') == gotosocial_defaults.gotosocial_version"
+    fail_msg: "GoToSocial reports {{ gotosocial_nodeinfo.json.software.version | default('none') }}, expected {{ gotosocial_defaults.gotosocial_version }}"
+    success_msg: "GoToSocial reports {{ gotosocial_nodeinfo.json.software.version }}"
 
 # The Mastodon-compatible instance API is what clients talk to first.
 - name: Retrieve the GoToSocial instance API document
