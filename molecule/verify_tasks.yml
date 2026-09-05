@@ -39,18 +39,28 @@
   ansible.builtin.uri:
     url: "http://localhost:{{ gotosocial_container_http_host_bind_port }}/"
     method: GET
-    status_code: [200, 302]
+    status_code: [200]
     follow_redirects: none
+    return_content: true
   register: gotosocial_frontend
-  until: gotosocial_frontend.status in [200, 302]
+  until: gotosocial_frontend.status in [200]
   retries: 60
   delay: 5
 
 - name: Assert the GoToSocial web frontend is served
   ansible.builtin.assert:
-    that: gotosocial_frontend.status in [200, 302]
+    that: gotosocial_frontend.status in [200]
     fail_msg: "The GoToSocial web frontend did not respond as expected ({{ gotosocial_frontend.status | default('no response') }})"
     success_msg: "The GoToSocial web frontend responded with {{ gotosocial_frontend.status }}"
+
+- name: Assert the GoToSocial web frontend does not render the pride flags by default
+  when: "gotosocial_defaults.gotosocial_container_image_customization_pride_flags_removal_enabled | bool"
+  ansible.builtin.assert:
+    that:
+      - "'🏳️‍🌈' not in gotosocial_frontend.content"
+      - "'🏳️‍⚧️' not in gotosocial_frontend.content"
+    fail_msg: "GoToSocial web frontend renders pride flags"
+    success_msg: "GoToSocial web frontend does not render pride flags"
 
 # NodeInfo discovery is a federation-facing endpoint. Serving it correctly
 # means the instance is configured well enough to describe itself to peers,
