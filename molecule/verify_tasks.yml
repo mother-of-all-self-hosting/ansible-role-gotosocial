@@ -13,21 +13,27 @@
     file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
     name: gotosocial_defaults
 
-- name: Wait for GoToSocial service to become active (up to 180s)
-  ansible.builtin.systemd:
+- name: Wait for the GoToSocial systemd service to become active (up to 180s)
+  ansible.builtin.systemd_service:
     name: gotosocial.service
   register: gotosocial_service
   until: gotosocial_service.status.ActiveState == 'active'
   retries: 36
   delay: 5
+  # So that giving up is reported by the assertion below rather than as a
+  # wall of systemd unit properties.
+  failed_when: false
 
-- name: Assert GoToSocial service is active
+# `Restart=always` in the systemd unit means that even a container which crashes
+# and gets restarted reads as active here, so this is a precondition rather than
+# a result.
+- name: Assert the GoToSocial systemd service is active
   ansible.builtin.assert:
     that: gotosocial_service.status.ActiveState == 'active'
-    fail_msg: "gotosocial.service not active ({{ gotosocial_service.status.ActiveState }})"
+    fail_msg: "gotosocial.service is not active ({{ gotosocial_service.status.ActiveState }})"
     success_msg: "gotosocial.service is active"
 
-- name: Retrieve GoToSocial service log for debugging
+- name: Retrieve the GoToSocial systemd service log for debugging
   when: gotosocial_debug_service_enabled | bool
   ansible.builtin.command:
     cmd: journalctl -xeu gotosocial.service

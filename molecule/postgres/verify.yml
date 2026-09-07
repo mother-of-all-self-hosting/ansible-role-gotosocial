@@ -10,18 +10,21 @@
   become: true
   gather_facts: false
   tasks:
-    - name: Wait for Postgres service to become active (up to 180s)
-      ansible.builtin.systemd:
+    - name: Wait for the Postgres systemd service to become active (up to 180s)
+      ansible.builtin.systemd_service:
         name: postgres.service
       register: postgres_service
       until: postgres_service.status.ActiveState == 'active'
       retries: 36
       delay: 5
 
-    - name: Assert Postgres service is active
+    # `Restart=always` in the systemd unit means that even a container which crashes
+    # and gets restarted reads as active here, so this is a precondition rather than
+    # a result.
+    - name: Assert the Postgres systemd service is active
       ansible.builtin.assert:
         that: postgres_service.status.ActiveState == 'active'
-        fail_msg: "postgres.service not active ({{ postgres_service.status.ActiveState }})"
+        fail_msg: "postgres.service is not active ({{ postgres_service.status.ActiveState }})"
         success_msg: "postgres.service is active"
 
     - name: Run the shared GoToSocial verification
