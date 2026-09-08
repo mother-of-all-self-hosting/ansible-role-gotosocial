@@ -36,7 +36,7 @@
 - name: Retrieve the GoToSocial systemd service log for debugging
   when: gotosocial_debug_service_enabled | bool
   ansible.builtin.command:
-    cmd: journalctl -xeu gotosocial.service
+    cmd: journalctl --no-pager --output=cat --unit=gotosocial.service
   changed_when: false
 
 # The web frontend is served by the same process that serves the API, so a
