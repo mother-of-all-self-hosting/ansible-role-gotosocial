@@ -12,16 +12,16 @@
   tasks:
     - name: Verify that GoToSocial works
       block:
-    - name: Run the shared GoToSocial verification
-      ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
+        - name: Run the shared GoToSocial verification
+          ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
 
-    - name: Show the GoToSocial verification summary
-      ansible.builtin.debug:
-        msg:
-          - "GoToSocial systemd: {{ gotosocial_service.status.ActiveState }}"
-          - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
-          - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
-          - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
+        - name: Show the GoToSocial verification summary
+          ansible.builtin.debug:
+            msg:
+              - "GoToSocial systemd: {{ gotosocial_service.status.ActiveState }}"
+              - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
+              - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
+              - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
 
       rescue:
         # Whatever went wrong, the reason is almost always in the systemd service log.

@@ -12,52 +12,52 @@
   tasks:
     - name: Verify that GoToSocial works
       block:
-    - name: Wait for the Postgres systemd service to become active (up to 180s)
-      ansible.builtin.systemd_service:
-        name: postgres.service
-      register: postgres_service
-      until: postgres_service.status.ActiveState == 'active'
-      retries: 36
-      delay: 5
+        - name: Wait for the Postgres systemd service to become active (up to 180s)
+          ansible.builtin.systemd_service:
+            name: postgres.service
+          register: postgres_service
+          until: postgres_service.status.ActiveState == 'active'
+          retries: 36
+          delay: 5
 
-    # `Restart=always` in the systemd unit means that even a container which crashes
-    # and gets restarted reads as active here, so this is a precondition rather than
-    # a result.
-    - name: Assert the Postgres systemd service is active
-      ansible.builtin.assert:
-        that: postgres_service.status.ActiveState == 'active'
-        fail_msg: "postgres.service is not active ({{ postgres_service.status.ActiveState }})"
-        success_msg: "postgres.service is active"
+        # `Restart=always` in the systemd unit means that even a container which crashes
+        # and gets restarted reads as active here, so this is a precondition rather than
+        # a result.
+        - name: Assert the Postgres systemd service is active
+          ansible.builtin.assert:
+            that: postgres_service.status.ActiveState == 'active'
+            fail_msg: "postgres.service is not active ({{ postgres_service.status.ActiveState }})"
+            success_msg: "postgres.service is active"
 
-    - name: Run the shared GoToSocial verification
-      ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
+        - name: Run the shared GoToSocial verification
+          ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
 
-    # The docker CLI is invoked directly, because the lint environment used in
-    # CI has no collections beyond ansible-core available.
-    - name: Count the GoToSocial tables in the Postgres database
-      ansible.builtin.command:
-        cmd: >-
-          docker exec -e PGPASSWORD={{ gotosocial_database_password | quote }} {{ postgres_identifier | default('postgres') }}
-          psql -U {{ gotosocial_database_username | quote }} -d {{ gotosocial_database_name | quote }}
-          -tAc "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public'"
-      register: gotosocial_postgres_tables
-      changed_when: false
+        # The docker CLI is invoked directly, because the lint environment used in
+        # CI has no collections beyond ansible-core available.
+        - name: Count the GoToSocial tables in the Postgres database
+          ansible.builtin.command:
+            cmd: >-
+              docker exec -e PGPASSWORD={{ gotosocial_database_password | quote }} {{ postgres_identifier | default('postgres') }}
+              psql -U {{ gotosocial_database_username | quote }} -d {{ gotosocial_database_name | quote }}
+              -tAc "SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public'"
+          register: gotosocial_postgres_tables
+          changed_when: false
 
-    - name: Assert GoToSocial has migrated its schema into Postgres
-      ansible.builtin.assert:
-        that: gotosocial_postgres_tables.stdout | trim | int > 0
-        fail_msg: "The Postgres database '{{ gotosocial_database_name }}' holds no GoToSocial tables - GoToSocial is not using it"
-        success_msg: "The Postgres database '{{ gotosocial_database_name }}' holds {{ gotosocial_postgres_tables.stdout | trim }} GoToSocial tables"
+        - name: Assert GoToSocial has migrated its schema into Postgres
+          ansible.builtin.assert:
+            that: gotosocial_postgres_tables.stdout | trim | int > 0
+            fail_msg: "The Postgres database '{{ gotosocial_database_name }}' holds no GoToSocial tables - GoToSocial is not using it"
+            success_msg: "The Postgres database '{{ gotosocial_database_name }}' holds {{ gotosocial_postgres_tables.stdout | trim }} GoToSocial tables"
 
-    - name: Show the GoToSocial verification summary
-      ansible.builtin.debug:
-        msg:
-          - "GoToSocial systemd: {{ gotosocial_service.status.ActiveState }}"
-          - "GoToSocial postgres systemd: {{ postgres_service.status.ActiveState }}"
-          - "GoToSocial postgres tables: {{ gotosocial_postgres_tables.stdout | trim }}"
-          - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
-          - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
-          - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
+        - name: Show the GoToSocial verification summary
+          ansible.builtin.debug:
+            msg:
+              - "GoToSocial systemd: {{ gotosocial_service.status.ActiveState }}"
+              - "GoToSocial postgres systemd: {{ postgres_service.status.ActiveState }}"
+              - "GoToSocial postgres tables: {{ gotosocial_postgres_tables.stdout | trim }}"
+              - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
+              - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
+              - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
 
       rescue:
         # Whatever went wrong, the reason is almost always in the systemd service log.
