@@ -10,6 +10,8 @@
   become: true
   gather_facts: false
   tasks:
+    - name: Verify that GoToSocial works
+      block:
     - name: Run the shared GoToSocial verification
       ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
 
@@ -20,3 +22,19 @@
           - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
           - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
           - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"
+
+      rescue:
+        # Whatever went wrong, the reason is almost always in the systemd service log.
+        - name: Retrieve the GoToSocial systemd service log
+          ansible.builtin.command:
+            cmd: journalctl --no-pager --output=cat --unit=gotosocial.service
+          register: gotosocial_service_log
+          changed_when: false
+
+        - name: Show the GoToSocial systemd service log
+          ansible.builtin.debug:
+            var: gotosocial_service_log.stdout_lines
+
+        - name: Fail because verification did not pass
+          ansible.builtin.fail:
+            msg: "GoToSocial verification failed. The systemd service log is printed above."
