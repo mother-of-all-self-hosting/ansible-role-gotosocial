@@ -12,39 +12,12 @@
 
   vars:
     gotosocial_verify_units:
-      - postgres.service
       - gotosocial.service
+      - postgres.service
 
   tasks:
     - name: Verify that GoToSocial works
       block:
-        - name: Wait for the GoToSocial systemd services to become active (up to 180s each)
-          ansible.builtin.systemd_service:
-            name: "{{ item }}"
-          register: gotosocial_services
-          until: gotosocial_services.status.ActiveState == 'active'
-          retries: 36
-          delay: 5
-          loop: "{{ gotosocial_verify_units }}"
-
-        # `Restart=always` in the systemd unit means that even a container which crashes
-        # and gets restarted reads as active here, so this is a precondition rather than
-        # a result.
-        - name: Assert the GoToSocial systemd services are active
-          ansible.builtin.assert:
-            that: gotosocial_services.results | map(attribute='status.ActiveState') | unique | list == ['active']
-            fail_msg: >-
-              Not every service is active:
-              {{ dict(gotosocial_verify_units | zip(gotosocial_services.results | map(attribute='status.ActiveState'))) }}
-            success_msg: "Both the Postgres and the GoToSocial systemd services are active"
-
-        - name: Retrieve the GoToSocial systemd services log for debugging
-          when: gotosocial_debug_service_enabled | bool
-          ansible.builtin.command:
-            cmd: "journalctl --no-pager --output=cat --unit={{ item }}"
-          changed_when: false
-          loop: "{{ gotosocial_verify_units }}"
-
         - name: Run the shared GoToSocial verification
           ansible.builtin.include_tasks: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/molecule/verify_tasks.yml"
 
@@ -68,7 +41,7 @@
         - name: Show the GoToSocial verification summary
           ansible.builtin.debug:
             msg:
-              - "GoToSocial systemd: {{ dict(gotosocial_verify_units | zip(gotosocial_services.results | map(attribute='status.ActiveState'))) }}"
+              - "GoToSocial systemd: {% for unit, state in gotosocial_verify_units | zip(gotosocial_services.results | map(attribute='status.ActiveState')) %}{{ unit }} ({{ state }}){% if not loop.last %}, {% endif %}{% endfor %}"
               - "GoToSocial postgres tables: {{ gotosocial_postgres_tables.stdout | trim }}"
               - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
               - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"

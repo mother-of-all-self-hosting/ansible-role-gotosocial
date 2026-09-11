@@ -9,6 +9,11 @@
   hosts: all
   become: true
   gather_facts: false
+
+  vars:
+    gotosocial_verify_units:
+      - gotosocial.service
+
   tasks:
     - name: Verify that GoToSocial works
       block:
@@ -18,7 +23,7 @@
         - name: Show the GoToSocial verification summary
           ansible.builtin.debug:
             msg:
-              - "GoToSocial systemd: {{ gotosocial_service.status.ActiveState }}"
+              - "GoToSocial systemd: {% for unit, state in gotosocial_verify_units | zip(gotosocial_services.results | map(attribute='status.ActiveState')) %}{{ unit }} ({{ state }}){% if not loop.last %}, {% endif %}{% endfor %}"
               - "GoToSocial web frontend: HTTP {{ gotosocial_frontend.status }}"
               - "GoToSocial nodeinfo software: {{ gotosocial_nodeinfo.json.software.name }} {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
               - "GoToSocial instance API: {{ gotosocial_instance_api.json.uri }} ({{ gotosocial_instance_api.json.version }})"

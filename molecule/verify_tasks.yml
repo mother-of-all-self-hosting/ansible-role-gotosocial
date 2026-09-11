@@ -13,13 +13,14 @@
     file: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/defaults/main.yml"
     name: gotosocial_defaults
 
-- name: Wait for the GoToSocial systemd service to become active (up to 180s)
+- name: Wait for the GoToSocial systemd services to become active (up to 180s each)
   ansible.builtin.systemd_service:
-    name: gotosocial.service
-  register: gotosocial_service
-  until: gotosocial_service.status.ActiveState == 'active'
+    name: "{{ item }}"
+  register: gotosocial_services
+  until: gotosocial_services.status.ActiveState == 'active'
   retries: 36
   delay: 5
+  loop: "{{ gotosocial_verify_units }}"
   # So that giving up is reported by the assertion below rather than as a
   # wall of systemd unit properties.
   failed_when: false
@@ -27,17 +28,20 @@
 # `Restart=always` in the systemd unit means that even a container which crashes
 # and gets restarted reads as active here, so this is a precondition rather than
 # a result.
-- name: Assert the GoToSocial systemd service is active
+- name: Assert the GoToSocial systemd services are active
   ansible.builtin.assert:
-    that: gotosocial_service.status.ActiveState == 'active'
-    fail_msg: "gotosocial.service is not active ({{ gotosocial_service.status.ActiveState }})"
-    success_msg: "gotosocial.service is active"
+    that: gotosocial_services.results | map(attribute='status.ActiveState') | unique | list == ['active']
+    fail_msg: >-
+      Not every service is active:
+      {{ dict(gotosocial_verify_units | zip(gotosocial_services.results | map(attribute='status.ActiveState'))) }}
+    success_msg: "Every systemd service is active"
 
-- name: Retrieve the GoToSocial systemd service log for debugging
+- name: Retrieve the GoToSocial systemd services log for debugging
   when: gotosocial_debug_service_enabled | bool
   ansible.builtin.command:
-    cmd: journalctl --no-pager --output=cat --unit=gotosocial.service
+    cmd: "journalctl --no-pager --output=cat --unit={{ item }}"
   changed_when: false
+  loop: "{{ gotosocial_verify_units }}"
 
 # The web frontend is served by the same process that serves the API, so a
 # successful response here means GoToSocial got as far as listening.
