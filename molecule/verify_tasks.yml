@@ -76,7 +76,7 @@
 - name: Assert the GoToSocial NodeInfo schema document reports GoToSocial
   ansible.builtin.assert:
     that: gotosocial_nodeinfo.json.software.name | default('') | lower == 'gotosocial'
-    fail_msg: "The GoToSocial NodeInfo schema document did not report GoToSocial: {{ gotosocial_nodeinfo.content | default('no content') }}"
+    fail_msg: "The GoToSocial NodeInfo schema document did not report GoToSocial: {{ gotosocial_nodeinfo.content | default('no response') }}"
     success_msg: "The GoToSocial NodeInfo schema document reports GoToSocial {{ gotosocial_nodeinfo.json.software.version | default('(no version)') }}"
 
 # NodeInfo discovery is a federation-facing endpoint. Serving it correctly
@@ -98,7 +98,7 @@
     that:
       - gotosocial_nodeinfo_discovery.json.links | default([]) | length > 0
       - gotosocial_nodeinfo_discovery.json.links | map(attribute='href') | select('search', '/nodeinfo/2\\.') | list | length > 0
-    fail_msg: "The GoToSocial NodeInfo discovery document did not advertise a NodeInfo 2.x schema: {{ gotosocial_nodeinfo_discovery.content | default('no content') }}"
+    fail_msg: "The GoToSocial NodeInfo discovery document did not advertise a NodeInfo 2.x schema: {{ gotosocial_nodeinfo_discovery.content | default('no response') }}"
     success_msg: "The GoToSocial NodeInfo discovery document advertises a NodeInfo 2.x schema"
 
 # The Mastodon-compatible instance API is what clients talk to first.
@@ -116,7 +116,7 @@
       - gotosocial_instance_api.json.uri | default('') | length > 0
       - gotosocial_hostname in gotosocial_instance_api.json.uri
       - gotosocial_instance_api.json.version | default('') | length > 0
-    fail_msg: "The GoToSocial instance API did not describe this instance: {{ gotosocial_instance_api.content | default('no content') }}"
+    fail_msg: "The GoToSocial instance API did not describe this instance: {{ gotosocial_instance_api.content | default('no response') }}"
     success_msg: "The GoToSocial instance API describes '{{ gotosocial_instance_api.json.uri }}'"
 
 - name: Assert the GoToSocial web frontend does not render the pride flags by default
