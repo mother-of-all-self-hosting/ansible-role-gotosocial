@@ -30,6 +30,7 @@ provisioner:
       all:
         # Helper variables
         gotosocial_debug_service_enabled: false
+        gotosocial_restarts_check_enabled: true
 
         # Variables for GoToSocial
         gotosocial_uid: 1000
