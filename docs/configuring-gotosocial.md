@@ -119,16 +119,16 @@ Setting it enables to connect to the Postgres server via Unix socket mounted in 
 You can configure a SMTP mailer for functions such as sending notifications. To set it up, add the following configuration to your `vars.yml` file as below (adapt to your needs):
 
 ```yaml
-# Set the hostname of the SMTP server
+# Specify the hostname of the SMTP server
 gotosocial_smtp_host: 'smtp.example.com'
 
-# Set the username for the SMTP server
+# Specify the username for the SMTP server
 gotosocial_smtp_username: gotosocial@example.com
 
-# Set the password for the SMTP server
+# Specify the password for the SMTP server
 gotosocial_smtp_password: yourpassword
 
-# Set the email address that emails will be sent from
+# Specify the email address that emails will be sent from
 gotosocial_smtp_from: gotosocial@example.com
 ```
 
