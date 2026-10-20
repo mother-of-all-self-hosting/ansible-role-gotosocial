@@ -56,11 +56,11 @@ traefik.http.routers.{{ gotosocial_identifier }}.tls.certResolver={{ gotosocial_
 traefik.http.services.{{ gotosocial_identifier }}.loadbalancer.server.port={{ gotosocial_container_http_port }}
 
 {% if gotosocial_container_labels_traefik_metrics_enabled %}
-############################################################
-#                                                          #
-# Metrics                                                  #
-#                                                          #
-############################################################
+########################################################################
+#                                                                      #
+# Metrics                                                              #
+#                                                                      #
+########################################################################
 
 {% set middlewares = gotosocial_container_labels_traefik_metrics_middlewares %}
 
@@ -93,11 +93,11 @@ traefik.http.routers.{{ gotosocial_identifier }}-metrics.tls.certResolver={{ got
 
 traefik.http.services.{{ gotosocial_identifier }}-metrics.loadbalancer.server.port={{ gotosocial_container_metrics_port }}
 
-############################################################
-#                                                          #
-# /Metrics                                                 #
-#                                                          #
-############################################################
+########################################################################
+#                                                                      #
+# /Metrics                                                             #
+#                                                                      #
+########################################################################
 {% endif %}
 
 
